@@ -1,0 +1,12 @@
+media_queries = {
+  mobile  : "only screen and (max-width: "+ $mobileWidth +")",
+  tablet  : "only screen and (max-width: "+ $tabletWidth +")",
+  desktop : "only screen and (max-width: "+ $desktopWidth +")",
+}
+media(breakpoints)
+  conditions = ()
+  for breakpoint in breakpoints
+    push(conditions, media_queries[breakpoint])
+  conditions = join(", ", conditions)
+  @media conditions
+    {block}
