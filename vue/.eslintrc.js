@@ -45,6 +45,14 @@ module.exports = {
 				after: true,
 			},
 		],
+		'no-unused-expressions': [
+			'error',
+			{
+				allowShortCircuit: false,
+				allowTernary: true,
+				allowTaggedTemplates: false,
+			},
+		],
 		'no-use-before-define': [
 			'error',
 			{

@@ -1,19 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cloneDeep from 'lodash/cloneDeep'
-import tests from './modules/tests'
+
+import auth from './modules/auth'
 
 Vue.use(Vuex)
 
 // used to reset store
 let initialState = cloneDeep({
-	tests: tests.state,
+	auth: auth.state,
 })
 
 const store = new Vuex.Store({
 	namespaced: true,
 	modules: {
-		tests,
+		auth,
 	},
 	mutations: {
 		resetState(state) {
