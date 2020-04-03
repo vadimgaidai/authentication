@@ -16,6 +16,6 @@ export default {
 	},
 }
 </script>
-<style lang="stylus" module>
-@import 'preloader.styl';
+<style lang="scss" module>
+@import 'preloader.scss';
 </style>

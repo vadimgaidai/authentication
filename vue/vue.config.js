@@ -15,8 +15,8 @@ module.exports = {
 	},
 	css: {
 		loaderOptions: {
-			stylus: {
-				prependData: `@import "~@/assets/style/core/variables.styl";`,
+			scss: {
+				prependData: `@import "~@/assets/style/core/variables.scss";`,
 			},
 		},
 	},

@@ -10,17 +10,18 @@
 
 html {
 	font-size: 10px;
-	overflow hidden
-	scroll-behavior smooth
+	overflow: hidden;
+	scroll-behavior: smooth;
 }
 
 body {
-	font: 1.6rem/1.5 $fontPrimary
+	font: 1.6rem/1.5 $fontPrimary;
 }
 
-
-a, button, input{
-	&:focus{
+a,
+button,
+input {
+	&:focus {
 		outline: 0;
 	}
 }
@@ -106,53 +107,55 @@ time,
 mark,
 audio,
 video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
 }
 
-[type="text/template"] {
+[type='text/template'] {
 	display: none;
 }
 
 /* recommended css code for vue-svgicon */
 .svg-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    color: inherit;
-    vertical-align: middle;
-    fill: none;
-    stroke: currentColor;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	color: inherit;
+	vertical-align: middle;
+	fill: none;
+	stroke: currentColor;
 }
 
 .svg-fill {
-    fill: currentColor;
-    stroke: none;
+	fill: currentColor;
+	stroke: none;
 }
 
 .svg-up {
-    /* default */
-    transform: rotate(0deg);
+	/* default */
+	transform: rotate(0deg);
 }
 
 .svg-right {
-    transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
 .svg-down {
-    transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 
 .svg-left {
-    transform: rotate(-90deg);
+	transform: rotate(-90deg);
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
 }
