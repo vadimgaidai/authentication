@@ -1,23 +1,18 @@
 <template>
-	<Main>
+	<div>
 		<img alt="Vue logo" src="@/assets/images/logo.png" />
 		<h1>Welcome to Your Vue.js App</h1>
-	</Main>
+	</div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Main from '@/components/main/'
 
 export default {
 	name: 'Index',
-	components: {
-		Main,
-	},
+	components: {},
 	data() {
 		return {}
 	},
 }
 </script>
-
-<style lang="stylus"></style>

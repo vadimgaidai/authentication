@@ -1,9 +1,8 @@
 <template>
 	<transition name="fade">
-		<div class="preloader">
-			<div class="preloader__bounce">
-				<div class="preloader__bounce-circle"></div>
-				<div class="preloader__bounce-circle"></div>
+		<div :class="$style.preloader">
+			<div :class="$style.bounce">
+				<div v-for="index in 2" :key="index" :class="$style.circle"></div>
 			</div>
 		</div>
 	</transition>
@@ -17,6 +16,6 @@ export default {
 	},
 }
 </script>
-<style lang="stylus">
+<style lang="stylus" module>
 @import 'preloader.styl';
 </style>

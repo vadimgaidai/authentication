@@ -19,7 +19,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.preloader = false
+		this.preloader = true
 	},
 }
 </script>

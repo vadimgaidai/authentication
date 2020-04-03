@@ -6,7 +6,7 @@ import router from './router'
 import store from './store/index'
 
 import './registerServiceWorker'
-import './assets/styl/style.styl'
+import './assets/style/style.styl'
 
 // plugins
 import './plugins/svgicon'
