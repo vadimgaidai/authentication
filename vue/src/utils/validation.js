@@ -1,42 +1,21 @@
-const typesValidation = {
-	required: () => ({
-		handler(value) {
-			return value.length
-		},
-		message: 'Обязательное поле',
-	}),
-	name: () => ({
-		handler(value) {
-			return /^([A-Za-z]*)$/.test(value)
-		},
-		message: 'Введите корректное имя',
-	}),
-	password: () => ({
-		handler(value) {
-			return /^([A-Za-z0-9@#$%^&+=]*)$/.test(value)
-		},
-		message: 'Введите корректный пароль',
-	}),
-	email: () => ({
-		handler(value) {
-			return /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(
-				value
-			)
-		},
-		message: 'Введите корректный адрес электронный почты',
-	}),
-	minLength: minLength => ({
-		handler(value) {
-			return value.length >= minLength
-		},
-		message: `Минимальное количество символов: ${minLength}`,
-	}),
-	maxLength: maxLength => ({
-		handler(value) {
-			return value.length <= maxLength
-		},
-		message: `Максимальное количество символов: ${maxLength}`,
-	}),
+import validationTypes from './validationTypes'
+
+const validation = (rules, value) => {
+	let isError = null
+	const isResult = rules.find(rule => {
+		let isValidationType = null
+
+		if (typeof rule === 'string') {
+			isValidationType = validationTypes[rule]()
+		} else if (typeof rule === 'object') {
+			isValidationType = validationTypes[rule.type](...rule.value)
+		}
+
+		isError = isValidationType(value)
+		return isValidationType(value)
+	})
+
+	return { result: !!isResult, message: isError }
 }
 
-export default typesValidation
+export default validation

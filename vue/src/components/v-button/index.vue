@@ -16,7 +16,7 @@ export default {
 	props: {
 		value: {
 			type: String,
-			default: '',
+			required: true,
 		},
 		typeButton: {
 			type: String,

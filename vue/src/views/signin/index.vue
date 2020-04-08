@@ -53,7 +53,7 @@ export default {
 			},
 			formRules: {
 				email: ['required', 'email'],
-				password: ['required', { type: 'minLength', value: 3 }, 'password'],
+				password: ['required', { type: 'length', value: [3, 64] }, 'password'],
 			},
 		}
 	},
