@@ -1,0 +1,36 @@
+.signin {
+	@include layout(2, 1fr, 2rem);
+	width: 100vw;
+	height: 100vh;
+	padding: 1.5rem;
+	background-color: $primary-bg;
+}
+
+.wrapper {
+	align-self: center;
+
+	&:first-child {
+		justify-self: center;
+	}
+
+	&:last-child {
+		justify-self: left;
+	}
+}
+
+.caprion {
+	font-size: 5rem;
+	font-weight: 300;
+	text-align: center;
+	color: $primary-color;
+}
+
+.description {
+	width: 100%;
+	max-width: 60rem;
+	font-size: 2rem;
+	font-weight: 300;
+	text-align: center;
+	padding-top: 1rem;
+	color: $primary-color;
+}

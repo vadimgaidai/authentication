@@ -1,0 +1,30 @@
+@import './mixins.scss';
+
+// Fonts
+$reserve-fonts: sans-serif;
+$font-primary: 'OpenSans', $reserve-fonts;
+
+// Colors
+$primary-color: #ffffff;
+$form-color: #131e41;
+$success-clolor: #2ecc71;
+$error-color: #e74c3c;
+
+// Backgrounds
+$primary-bg: #b0acf8;
+$form-bg: #ffffff;
+$default-btn: #95a5a6;
+$primary-btn: #5352ed;
+
+// Transition
+$primary-transition: 0.3s;
+
+// Sizes
+$header-height: 5rem;
+$footer-height: 5rem;
+$max-width: 144rem;
+
+// Media query
+$mobile-width: 500px;
+$tablet-width: 768px;
+$desktop-width: 1200px;

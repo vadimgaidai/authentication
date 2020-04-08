@@ -16,12 +16,12 @@ const router = new Router({
 		{
 			path: '/signin',
 			name: 'SignIn',
-			component: () => import(/* webpackChunkName: "SignIn" */ './views/SignIn'),
+			component: () => import(/* webpackChunkName: "SignIn" */ './views/signin/'),
 		},
 		{
 			path: '/signup',
 			name: 'SignUp',
-			component: () => import(/* webpackChunkName: "SignUp" */ './views/SignUp'),
+			component: () => import(/* webpackChunkName: "SignUp" */ './views/signup/'),
 		},
 	],
 })

@@ -1,7 +1,7 @@
 <template>
-	<div>signin</div>
+	<div>signup</div>
 </template>
 <script>
 export default {}
 </script>
-<style lang="stylus"></style>
+<style lang="scss" module></style>

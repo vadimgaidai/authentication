@@ -1,0 +1,36 @@
+.label {
+	display: block;
+	margin-top: 1.5rem;
+}
+
+.text {
+	font-size: 1.7rem;
+	line-height: 2.2rem;
+	font-weight: 300;
+	padding-bottom: 0.5rem;
+	color: $form-color;
+}
+
+.input {
+	display: block;
+	width: 100%;
+	font-size: 1.4rem;
+	line-height: 2.2rem;
+	font-weight: 300;
+	padding: 0.7rem;
+	border: 0.1rem solid $primary-bg;
+	background-color: transparent;
+	color: $form-color;
+
+	&::placeholder {
+		color: rgba($form-color, 0.5);
+	}
+}
+
+.error {
+	padding-top: 0.5rem;
+	font-size: 1.7rem;
+	line-height: 2.2rem;
+	font-weight: 300;
+	color: $error-color;
+}

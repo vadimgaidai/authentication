@@ -19,8 +19,8 @@ export default {
 		}
 	},
 	mounted() {
-		this.preloader = true
+		this.preloader = false
 	},
 }
 </script>
-<style lang="stylus"></style>
+<style lang="scss"></style>
