@@ -1,6 +1,7 @@
 .label {
+	position: relative;
 	display: block;
-	margin-top: 1.5rem;
+	margin-top: 2.5rem;
 }
 
 .text {
@@ -11,16 +12,26 @@
 	color: $form-color;
 }
 
+.contaier {
+	position: relative;
+	width: 100%;
+}
+
 .input {
 	display: block;
 	width: 100%;
 	font-size: 1.4rem;
 	line-height: 2.2rem;
 	font-weight: 300;
-	padding: 0.7rem;
+	padding: 0.7rem 3rem 0.7rem 0.7rem;
 	border: 0.1rem solid $primary-bg;
 	background-color: transparent;
+	transition: border-color $primary-transition ease;
 	color: $form-color;
+
+	&Error {
+		border-color: $error-color;
+	}
 
 	&::placeholder {
 		color: rgba($form-color, 0.5);
@@ -28,9 +39,18 @@
 }
 
 .error {
+	position: absolute;
 	padding-top: 0.5rem;
-	font-size: 1.7rem;
-	line-height: 2.2rem;
+	font-size: 1.4rem;
+	line-height: 1.4rem;
 	font-weight: 300;
 	color: $error-color;
+}
+
+.icon {
+	position: absolute;
+	top: 50%;
+	right: 0.7rem;
+	transform: translateY(-50%);
+	cursor: pointer;
 }

@@ -3,7 +3,7 @@
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
-			:value="value"
+			:value="buttonValue"
 			:type-button="typeButton"
 			:disabled="isDisabledButton"
 		/>
@@ -22,7 +22,7 @@ export default {
 			type: String,
 			default: '',
 		},
-		value: {
+		buttonValue: {
 			type: String,
 			required: true,
 		},

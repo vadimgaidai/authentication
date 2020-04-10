@@ -2,7 +2,7 @@ const validationTypes = {
 	required: () => {
 		return value => {
 			if (!value) {
-				return 'Обязательное поле'
+				return 'Required field'
 			}
 			return false
 		}
@@ -11,7 +11,7 @@ const validationTypes = {
 		return value => {
 			const isValid = /^([A-Za-z]*)$/.test(value)
 			if (!isValid) {
-				return 'Введите корректное имя'
+				return 'Name can only contain letters'
 			}
 			return false
 		}
@@ -20,7 +20,7 @@ const validationTypes = {
 		return value => {
 			const isValid = /^([A-Za-z0-9@#$%^&+=]*)$/.test(value)
 			if (!isValid) {
-				return 'Введите корректный пароль'
+				return 'Enter a valid password'
 			}
 			return false
 		}
@@ -31,7 +31,7 @@ const validationTypes = {
 				value
 			)
 			if (!isValid) {
-				return 'Введите корректный адрес электронный почты'
+				return 'Enter a valid email address'
 			}
 			return false
 		}
@@ -39,10 +39,10 @@ const validationTypes = {
 	length: (minLength, maxLength) => {
 		return value => {
 			if (value.length < minLength) {
-				return `Минимальное количество символов: ${minLength}`
+				return `Minimum number of characters: ${minLength}`
 			}
 			if (value.length > maxLength) {
-				return `Максимальное количество символов: ${maxLength}`
+				return `Maximum number of characters: ${maxLength}`
 			}
 			return false
 		}

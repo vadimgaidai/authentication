@@ -15,20 +15,22 @@ const router = new Router({
 		},
 		{
 			path: '/signin',
-			name: 'SignIn',
-			component: () => import(/* webpackChunkName: "SignIn" */ './views/signin/'),
+			name: 'signin',
+			component: () => import(/* webpackChunkName: "SignIn" */ './views/auth/'),
 		},
 		{
 			path: '/signup',
-			name: 'SignUp',
-			component: () => import(/* webpackChunkName: "SignUp" */ './views/signup/'),
+			name: 'signup',
+			component: () => import(/* webpackChunkName: "SignUp" */ './views/auth/'),
 		},
 	],
 })
 
 router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
-		!store.state.isAuthentication ? next({ path: '/signin' }) : next({ path: '/' })
+		!store.state.isAuthentication
+			? next({ path: '/signin' })
+			: next({ path: '/' })
 	} else {
 		next()
 	}

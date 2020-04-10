@@ -1,9 +1,8 @@
-.signin {
+.auth {
 	@include layout(2, 1fr, 2rem);
 	width: 100vw;
 	height: 100vh;
 	padding: 1.5rem;
-	background-color: $primary-bg;
 }
 
 .wrapper {
@@ -33,4 +32,22 @@
 	text-align: center;
 	padding-top: 1rem;
 	color: $primary-color;
+}
+
+.route {
+	font-size: 1.8rem;
+	text-align: center;
+	padding-top: 2rem;
+	color: $primary-color;
+
+	&Link {
+		text-decoration: none;
+		font-size: 2rem;
+		color: $link-color;
+		transition: color $primary-transition ease;
+
+		&:hover {
+			color: rgba($link-color, 0.5);
+		}
+	}
 }

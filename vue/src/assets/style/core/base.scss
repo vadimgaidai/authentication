@@ -16,6 +16,7 @@ html {
 
 body {
 	font: 1.6rem/1.5 $font-primary;
+	background-color: $primary-bg;
 }
 
 a,
@@ -150,12 +151,14 @@ video {
 	transform: rotate(-90deg);
 }
 
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.5s;
-}
+.fade {
+	&-enter-active,
+	&-leave-active {
+		transition: opacity $primary-transition;
+	}
 
-.fade-enter,
-.fade-leave-to {
-	opacity: 0;
+	&-enter,
+	&-leave-to {
+		opacity: 0;
+	}
 }

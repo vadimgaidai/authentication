@@ -1,14 +1,28 @@
 <template>
 	<label :class="$style.label">
 		<p :class="$style.text">{{ label }}</p>
-		<input
-			:class="$style.input"
-			:type="type"
-			:placeholder="preloader"
-			@input="$emit('input', $event.target.value)"
-			@blur="validateHandler($event.target.value)"
-		/>
-		<p v-show="error" :class="$style.error">{{ error }}</p>
+		<div :class="$style.contaier">
+			<input
+				:class="[$style.input, { [$style.inputError]: error }]"
+				:type="inputType || type"
+				:placeholder="preloader"
+				@input="
+					$emit('input', $event.target.value),
+						validateHandler($event.target.value)
+				"
+			/>
+			<icon
+				v-if="type === 'password'"
+				:class="$style.icon"
+				:name="isPasswordVisible ? 'eye-hide' : 'eye'"
+				width="22"
+				height="22"
+				@click="setVisiblePassword"
+			/>
+		</div>
+		<transition name="fade">
+			<span v-if="error" :class="$style.error">{{ error }}</span>
+		</transition>
 	</label>
 </template>
 <script>
@@ -37,13 +51,20 @@ export default {
 	data() {
 		return {
 			error: null,
+			isPasswordVisible: false,
+			inputType: null,
 		}
 	},
 	methods: {
 		validateHandler(value) {
-			this.error = null
 			const { message } = validation(this.rules, value)
 			this.error = message
+		},
+		setVisiblePassword() {
+			this.isPasswordVisible = !this.isPasswordVisible
+			this.isPasswordVisible
+				? (this.inputType = 'text')
+				: (this.inputType = 'password')
 		},
 	},
 }

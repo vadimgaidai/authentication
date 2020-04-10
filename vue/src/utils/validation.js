@@ -11,11 +11,14 @@ const validation = (rules, value) => {
 			isValidationType = validationTypes[rule.type](...rule.value)
 		}
 
-		isError = isValidationType(value)
+		if (isValidationType(value)) {
+			isError = isValidationType(value)
+		}
+
 		return isValidationType(value)
 	})
 
-	return { result: !!isResult, message: isError }
+	return { result: !isResult, message: isError }
 }
 
 export default validation
