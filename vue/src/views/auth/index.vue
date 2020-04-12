@@ -8,10 +8,11 @@
 		</div>
 		<div :class="$style.wrapper">
 			<VForm
-				:title="getFormTitle"
-				:button-value="getValueFormButton"
+				v-model="isValid"
+				:title="isSignUp ? 'Sign Up' : 'Sign In'"
+				:button-value="isSignUp ? 'Create new account' : 'Login to account'"
 				type-button="primary"
-				@submit:v-form="sendDataForm"
+				@submit="sendDataForm"
 			>
 				<template #form-content>
 					<VInput
@@ -39,10 +40,12 @@
 				</template>
 			</VForm>
 			<p :class="$style.route">
-				{{ getRouteText }}
-				<router-link :to="getLinkPath" :class="$style.routeLink">{{
-					getLinkTitle
-				}}</router-link>
+				{{ isSignUp ? 'Dont have an account?' : 'Already have an account?' }}
+				<router-link
+					:to="isSignUp ? 'signin' : 'signup'"
+					:class="$style.routeLink"
+					>{{ isSignUp ? 'Sign In' : 'Sign Up' }}</router-link
+				>
 			</p>
 		</div>
 	</section>
@@ -59,6 +62,7 @@ export default {
 	},
 	data() {
 		return {
+			isValid: false,
 			isSignUp: false,
 			formData: {
 				name: '',
@@ -71,25 +75,6 @@ export default {
 				password: ['required', { type: 'length', value: [8, 64] }, 'password'],
 			},
 		}
-	},
-	computed: {
-		getFormTitle() {
-			return this.isSignUp ? 'Sign Up' : 'Sign In'
-		},
-		getValueFormButton() {
-			return this.isSignUp ? 'Create new account' : 'Login to account'
-		},
-		getLinkPath() {
-			return this.isSignUp ? 'signin' : 'signup'
-		},
-		getLinkTitle() {
-			return this.isSignUp ? 'Sign In' : 'Sign Up'
-		},
-		getRouteText() {
-			return this.isSignUp
-				? 'Dont have an account?'
-				: 'Already have an account?'
-		},
 	},
 	watch: {
 		'$route.path': {

@@ -11,6 +11,7 @@
 		"svg": "vsvg -s ./src/assets/icons/ -t ./src/components/icons/"
 	},
 	"dependencies": {
+		"@babel/preset-env": "^7.9.5",
 		"core-js": "^2.6.5",
 		"es6-promise": "^4.2.8",
 		"isomorphic-fetch": "^2.2.1",
@@ -28,6 +29,9 @@
 		"vuex": "^3.0.1"
 	},
 	"devDependencies": {
+		"@babel/plugin-transform-runtime": "^7.9.0",
+		"@babel/polyfill": "^7.8.7",
+		"@babel/register": "^7.9.0",
 		"@vue/cli-plugin-babel": "^3.7.0",
 		"@vue/cli-plugin-e2e-nightwatch": "^3.7.0",
 		"@vue/cli-plugin-eslint": "^4.2.3",
@@ -36,6 +40,7 @@
 		"@vue/cli-service": "^3.7.0",
 		"@vue/eslint-config-prettier": "^6.0.0",
 		"@vue/test-utils": "1.0.0-beta.29",
+		"babel-core": "7.0.0-bridge.0",
 		"babel-eslint": "^10.1.0",
 		"chai": "^4.1.2",
 		"eslint-config-airbnb": "^18.1.0",

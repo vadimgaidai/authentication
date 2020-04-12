@@ -6,6 +6,7 @@
 				:class="[$style.input, { [$style.inputError]: error }]"
 				:type="inputType || type"
 				:placeholder="preloader"
+				@blur="validateHandler($event.target.value)"
 				@input="
 					$emit('input', $event.target.value),
 						validateHandler($event.target.value)
@@ -43,9 +44,20 @@ export default {
 			type: String,
 			required: true,
 		},
+		value: {
+			type: String,
+			default: '',
+		},
 		rules: {
 			type: Array,
 			default: () => [],
+		},
+	},
+	inject: {
+		vForm: {
+			default: () => ({
+				checkValidInput() {},
+			}),
 		},
 	},
 	data() {
@@ -55,10 +67,15 @@ export default {
 			inputType: null,
 		}
 	},
+	mounted() {
+		// const { type, result } = validation(this.rules, this.value)
+		// this.vForm.checkValidInput(type, result)
+	},
 	methods: {
 		validateHandler(value) {
-			const { message } = validation(this.rules, value)
+			const { type, result, message } = validation(this.rules, value)
 			this.error = message
+			this.vForm.checkValidInput(type, result)
 		},
 		setVisiblePassword() {
 			this.isPasswordVisible = !this.isPasswordVisible

@@ -2,13 +2,16 @@ import validationTypes from './validationTypes'
 
 const validation = (rules, value) => {
 	let isError = null
-	const isResult = rules.find(rule => {
+	let isRuleType = null
+	rules.find(rule => {
 		let isValidationType = null
 
-		if (typeof rule === 'string') {
-			isValidationType = validationTypes[rule]()
-		} else if (typeof rule === 'object') {
+		if (rule?.type) {
+			isRuleType = rule.type
 			isValidationType = validationTypes[rule.type](...rule.value)
+		} else if (rule) {
+			isRuleType = rule
+			isValidationType = validationTypes[rule]()
 		}
 
 		if (isValidationType(value)) {
@@ -18,7 +21,11 @@ const validation = (rules, value) => {
 		return isValidationType(value)
 	})
 
-	return { result: !isResult, message: isError }
+	return {
+		result: !isError,
+		type: isRuleType,
+		message: isError,
+	}
 }
 
 export default validation

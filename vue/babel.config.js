@@ -6,5 +6,7 @@ module.exports = {
 				useBuiltIns: 'entry',
 			},
 		],
+		['@babel/preset-env'],
 	],
+	plugins: ['@babel/plugin-transform-runtime'],
 }

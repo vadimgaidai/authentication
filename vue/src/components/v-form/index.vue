@@ -1,5 +1,5 @@
 <template>
-	<form :class="$style.form" @submit="sendDataForm">
+	<form :class="$style.form" @submit.prevent="$emit('submit')">
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
@@ -30,16 +30,31 @@ export default {
 			type: String,
 			required: true,
 		},
+		value: Boolean,
+	},
+	provide() {
+		return {
+			vForm: this,
+		}
 	},
 	data() {
 		return {
+			isValid: {},
 			isDisabledButton: false,
 		}
 	},
 	methods: {
-		sendDataForm(event) {
-			event.preventDefault()
-			this.$emit('submit:v-form')
+		checkValidInput(rule, isValid) {
+			// console.log(rule, isValid)
+			// console.log(rule)
+
+			this.$set(this.isValid, rule, isValid)
+
+			// this.$set(this.isValid, toString(type), isValid)
+
+			// console.log(this.isValid)
+
+			this.$emit('input', isValid)
 		},
 	},
 }
