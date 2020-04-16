@@ -25,12 +25,13 @@ export default {
 		buttonValue: {
 			type: String,
 			required: true,
+			default: '',
 		},
 		typeButton: {
 			type: String,
 			required: true,
+			default: '',
 		},
-		value: Boolean,
 	},
 	provide() {
 		return {
@@ -44,17 +45,12 @@ export default {
 		}
 	},
 	methods: {
-		checkValidInput(rule, isValid) {
-			// console.log(rule, isValid)
-			// console.log(rule)
-
-			this.$set(this.isValid, rule, isValid)
-
-			// this.$set(this.isValid, toString(type), isValid)
-
-			// console.log(this.isValid)
-
-			this.$emit('input', isValid)
+		checkValidInput(isValid, type) {
+			this.$set(this.isValid, type, isValid)
+			const isError = Object.values(this.isValid).find(valid => valid === false)
+			typeof isError !== 'undefined'
+				? (this.isDisabledButton = true)
+				: (this.isDisabledButton = false)
 		},
 	},
 }

@@ -3,14 +3,12 @@
 		<p :class="$style.text">{{ label }}</p>
 		<div :class="$style.contaier">
 			<input
+				v-model="inputValue"
 				:class="[$style.input, { [$style.inputError]: error }]"
 				:type="inputType || type"
 				:placeholder="preloader"
-				@blur="validateHandler($event.target.value)"
-				@input="
-					$emit('input', $event.target.value),
-						validateHandler($event.target.value)
-				"
+				@blur="eventHandler(inputValue)"
+				@input="eventHandler(inputValue)"
 			/>
 			<icon
 				v-if="type === 'password'"
@@ -27,22 +25,23 @@
 	</label>
 </template>
 <script>
-import validation from '@/utils/validation'
-
 export default {
 	name: 'VInput',
 	props: {
 		preloader: {
 			type: String,
 			required: true,
+			default: '',
 		},
 		type: {
 			type: String,
 			required: true,
+			default: '',
 		},
 		label: {
 			type: String,
 			required: true,
+			default: '',
 		},
 		value: {
 			type: String,
@@ -62,20 +61,33 @@ export default {
 	},
 	data() {
 		return {
+			inputValue: '',
 			error: null,
 			isPasswordVisible: false,
 			inputType: null,
+			isValid: false,
 		}
 	},
 	mounted() {
-		// const { type, result } = validation(this.rules, this.value)
-		// this.vForm.checkValidInput(type, result)
+		this.setValidation(false)
 	},
 	methods: {
-		validateHandler(value) {
-			const { type, result, message } = validation(this.rules, value)
-			this.error = message
-			this.vForm.checkValidInput(type, result)
+		checkIsValid(valueImput, isError) {
+			return this.rules.some(func => {
+				const error = func(valueImput)
+				if (isError) {
+					this.error = error
+				}
+				return error
+			})
+		},
+		setValidation(isError) {
+			this.isValid = this.checkIsValid(this.inputValue, isError)
+			this.vForm.checkValidInput(!this.isValid, this.type)
+		},
+		eventHandler() {
+			this.$emit('input', this.inputValue)
+			this.setValidation(true)
 		},
 		setVisiblePassword() {
 			this.isPasswordVisible = !this.isPasswordVisible

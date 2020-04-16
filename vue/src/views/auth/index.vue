@@ -8,7 +8,6 @@
 		</div>
 		<div :class="$style.wrapper">
 			<VForm
-				v-model="isValid"
 				:title="isSignUp ? 'Sign Up' : 'Sign In'"
 				:button-value="isSignUp ? 'Create new account' : 'Login to account'"
 				type-button="primary"
@@ -51,6 +50,7 @@
 	</section>
 </template>
 <script>
+import { required, length, name, email, password } from '@/utils/validation'
 import VForm from '@/components/v-form'
 import VInput from '@/components/v-input'
 
@@ -62,7 +62,6 @@ export default {
 	},
 	data() {
 		return {
-			isValid: false,
 			isSignUp: false,
 			formData: {
 				name: '',
@@ -70,9 +69,9 @@ export default {
 				password: '',
 			},
 			formRules: {
-				name: ['required', { type: 'length', value: [3] }, 'name'],
-				email: ['required', 'email'],
-				password: ['required', { type: 'length', value: [8, 64] }, 'password'],
+				name: [required(), length(3), name()],
+				email: [required(), email()],
+				password: [required(), length(8, 64), password()],
 			},
 		}
 	},
