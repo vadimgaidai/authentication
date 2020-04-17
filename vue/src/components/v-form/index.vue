@@ -44,6 +44,14 @@ export default {
 			isDisabledButton: false,
 		}
 	},
+	watch: {
+		'$route.path': {
+			deep: true,
+			handler() {
+				this.isValid = {}
+			},
+		},
+	},
 	methods: {
 		checkValidInput(isValid, type) {
 			this.$set(this.isValid, type, isValid)

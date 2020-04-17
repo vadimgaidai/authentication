@@ -68,6 +68,14 @@ export default {
 			isValid: false,
 		}
 	},
+	watch: {
+		'$route.path': {
+			deep: true,
+			handler() {
+				this.setValidation(false)
+			},
+		},
+	},
 	mounted() {
 		this.setValidation(false)
 	},
