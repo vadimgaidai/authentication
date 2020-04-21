@@ -35,7 +35,7 @@ export default {
 	},
 	provide() {
 		return {
-			vForm: this,
+			checkValidInput: this.checkValidInput,
 		}
 	},
 	data() {
@@ -55,10 +55,7 @@ export default {
 	methods: {
 		checkValidInput(isValid, type) {
 			this.$set(this.isValid, type, isValid)
-			const isError = Object.values(this.isValid).find(valid => valid === false)
-			typeof isError !== 'undefined'
-				? (this.isDisabledButton = true)
-				: (this.isDisabledButton = false)
+			this.isDisabledButton = Object.values(this.isValid).some(valid => !valid)
 		},
 	},
 }

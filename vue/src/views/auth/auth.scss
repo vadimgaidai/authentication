@@ -46,7 +46,8 @@
 		color: $link-color;
 		transition: color $primary-transition ease;
 
-		&:hover {
+		&:hover,
+		&:focus {
 			color: rgba($link-color, 0.5);
 		}
 	}

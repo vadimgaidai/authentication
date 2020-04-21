@@ -3,21 +3,23 @@
 		<p :class="$style.text">{{ label }}</p>
 		<div :class="$style.contaier">
 			<input
-				v-model="inputValue"
 				:class="[$style.input, { [$style.inputError]: error }]"
 				:type="inputType || type"
 				:placeholder="preloader"
-				@blur="eventHandler(inputValue)"
-				@input="eventHandler(inputValue)"
+				@input="$emit('input', $event.target.value)"
 			/>
-			<icon
+			<button
 				v-if="type === 'password'"
-				:class="$style.icon"
-				:name="isPasswordVisible ? 'eye-hide' : 'eye'"
-				width="22"
-				height="22"
+				:class="$style.button"
 				@click="setVisiblePassword"
-			/>
+			>
+				<icon
+					:class="$style.icon"
+					:name="isPasswordVisible ? 'eye-hide' : 'eye'"
+					width="22"
+					height="22"
+				/>
+			</button>
 		</div>
 		<transition name="fade">
 			<span v-if="error" :class="$style.error">{{ error }}</span>
@@ -45,7 +47,7 @@ export default {
 		},
 		value: {
 			type: String,
-			default: '',
+			required: true,
 		},
 		rules: {
 			type: Array,
@@ -53,15 +55,12 @@ export default {
 		},
 	},
 	inject: {
-		vForm: {
-			default: () => ({
-				checkValidInput() {},
-			}),
+		checkValidInput: {
+			default: () => this.checkValidInput(),
 		},
 	},
 	data() {
 		return {
-			inputValue: '',
 			error: null,
 			isPasswordVisible: false,
 			inputType: null,
@@ -69,6 +68,9 @@ export default {
 		}
 	},
 	watch: {
+		value() {
+			this.setValidation(true)
+		},
 		'$route.path': {
 			deep: true,
 			handler() {
@@ -80,9 +82,9 @@ export default {
 		this.setValidation(false)
 	},
 	methods: {
-		checkIsValid(valueImput, isError) {
+		checkIsValid(isError) {
 			return this.rules.some(func => {
-				const error = func(valueImput)
+				const error = func(this.value)
 				if (isError) {
 					this.error = error
 				}
@@ -90,12 +92,8 @@ export default {
 			})
 		},
 		setValidation(isError) {
-			this.isValid = this.checkIsValid(this.inputValue, isError)
-			this.vForm.checkValidInput(!this.isValid, this.type)
-		},
-		eventHandler() {
-			this.$emit('input', this.inputValue)
-			this.setValidation(true)
+			this.isValid = this.checkIsValid(isError)
+			this.checkValidInput(!this.isValid, this.type)
 		},
 		setVisiblePassword() {
 			this.isPasswordVisible = !this.isPasswordVisible
