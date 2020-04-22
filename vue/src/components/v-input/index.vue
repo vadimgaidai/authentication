@@ -3,9 +3,12 @@
 		<p :class="$style.text">{{ label }}</p>
 		<div :class="$style.contaier">
 			<input
+				ref="input"
 				:class="[$style.input, { [$style.inputError]: error }]"
 				:type="inputType || type"
 				:placeholder="preloader"
+				:value="value"
+				@blur="onBlurHandler"
 				@input="$emit('input', $event.target.value)"
 			/>
 			<button
@@ -82,6 +85,9 @@ export default {
 		this.setValidation(false)
 	},
 	methods: {
+		onBlurHandler() {
+			this.setValidation(true)
+		},
 		checkIsValid(isError) {
 			return this.rules.some(func => {
 				const error = func(this.value)

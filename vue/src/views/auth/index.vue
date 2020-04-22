@@ -1,9 +1,9 @@
 <template>
 	<section :class="$style.auth">
 		<div :class="$style.wrapper">
-			<h1 :class="$style.caprion">Create, Sign & Store</h1>
+			<h1 :class="$style.caprion">{{ captionAuth }}</h1>
 			<p :class="$style.description">
-				text
+				{{ descriptionAuth }}
 			</p>
 		</div>
 		<div :class="$style.wrapper">
@@ -62,6 +62,7 @@ export default {
 	},
 	data() {
 		return {
+			isVisible: false,
 			isSignUp: false,
 			formData: {
 				name: '',
@@ -74,6 +75,18 @@ export default {
 				password: [required(), length(8, 64), password()],
 			},
 		}
+	},
+	computed: {
+		captionAuth() {
+			return this.isSignUp
+				? 'Create your account!'
+				: 'Login in into your account'
+		},
+		descriptionAuth() {
+			return this.isSignUp
+				? 'Complete all the following. Just one step'
+				: 'Welcome back! Please enter you access info'
+		},
 	},
 	watch: {
 		'$route.path': {

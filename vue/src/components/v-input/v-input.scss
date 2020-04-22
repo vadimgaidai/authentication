@@ -5,7 +5,7 @@
 }
 
 .text {
-	font-size: 1.7rem;
+	font-size: 1.4rem;
 	line-height: 2.2rem;
 	font-weight: 300;
 	padding-bottom: 0.5rem;
@@ -20,15 +20,14 @@
 .input {
 	display: block;
 	width: 100%;
-	font-size: 1.4rem;
+	font-size: 1.7rem;
 	line-height: 2.2rem;
 	font-weight: 300;
-	padding: 0.7rem 3rem 0.7rem 0.7rem;
+	padding: 0.7rem 3rem 0.7rem 0;
 	border: 0.1rem solid transparent;
-	border-bottom: 0.1rem solid $primary-bg;
+	border-bottom: 0.2rem solid $primary-bg;
 	background-color: transparent;
-	transition: border-color $primary-transition ease,
-		box-shadow $primary-transition ease;
+	transition: border-color $primary-transition;
 	color: $form-color;
 
 	&Error {
@@ -40,7 +39,7 @@
 	}
 
 	&:focus {
-		box-shadow: 0 0 1rem rgba(19, 30, 65, 0.3);
+		border-bottom-color: rgba($primary-bg, 0.5);
 	}
 }
 
@@ -73,6 +72,6 @@
 }
 
 .icon {
-	transition: color $primary-transition ease;
+	transition: color $primary-transition;
 	color: $form-color;
 }

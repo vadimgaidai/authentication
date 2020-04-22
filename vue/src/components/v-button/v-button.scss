@@ -6,8 +6,7 @@
 	width: 100%;
 	padding: 1rem;
 	margin-top: 3rem;
-	transition: opacity $primary-transition ease,
-		box-shadow $primary-transition ease;
+	transition: opacity $primary-transition, box-shadow $primary-transition;
 	border: none;
 	cursor: pointer;
 	&:hover {

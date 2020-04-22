@@ -27,7 +27,7 @@
 .description {
 	width: 100%;
 	max-width: 60rem;
-	font-size: 2rem;
+	font-size: 2.5rem;
 	font-weight: 300;
 	text-align: center;
 	padding-top: 1rem;
@@ -41,10 +41,12 @@
 	color: $primary-color;
 
 	&Link {
-		text-decoration: none;
+		display: block;
 		font-size: 2rem;
+		font-weight: bold;
 		color: $link-color;
-		transition: color $primary-transition ease;
+		text-decoration: none;
+		transition: color $primary-transition;
 
 		&:hover,
 		&:focus {
