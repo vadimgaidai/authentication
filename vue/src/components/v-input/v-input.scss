@@ -24,14 +24,15 @@
 	line-height: 2.2rem;
 	font-weight: 300;
 	padding: 0.7rem 3rem 0.7rem 0.7rem;
-	border: 0.1rem solid $primary-bg;
+	border: 0.1rem solid transparent;
+	border-bottom: 0.1rem solid $primary-bg;
 	background-color: transparent;
 	transition: border-color $primary-transition ease,
 		box-shadow $primary-transition ease;
 	color: $form-color;
 
 	&Error {
-		border-color: $error-color;
+		border-bottom-color: $error-color;
 	}
 
 	&::placeholder {
