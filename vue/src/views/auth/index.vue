@@ -64,6 +64,7 @@ export default {
 		return {
 			isVisible: false,
 			isSignUp: false,
+			isValid: false,
 			formData: {
 				name: '',
 				email: '',

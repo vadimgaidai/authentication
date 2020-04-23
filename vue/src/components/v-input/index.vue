@@ -8,7 +8,7 @@
 				:type="inputType || type"
 				:placeholder="preloader"
 				:value="value"
-				@blur="onBlurHandler"
+				@blur="setValidation(true)"
 				@input="$emit('input', $event.target.value)"
 			/>
 			<button
@@ -74,20 +74,13 @@ export default {
 		value() {
 			this.setValidation(true)
 		},
-		'$route.path': {
-			deep: true,
-			handler() {
-				this.setValidation(false)
-			},
-		},
 	},
 	mounted() {
-		this.setValidation(false)
+		this.$root.$on('set-validation', () => {
+			this.setValidation(true)
+		})
 	},
 	methods: {
-		onBlurHandler() {
-			this.setValidation(true)
-		},
 		checkIsValid(isError) {
 			return this.rules.some(func => {
 				const error = func(this.value)

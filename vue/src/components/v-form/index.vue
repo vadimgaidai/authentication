@@ -1,5 +1,5 @@
 <template>
-	<form :class="$style.form" @submit.prevent="$emit('submit')">
+	<form :class="$style.form" @submit="eventHandler">
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
@@ -32,6 +32,7 @@ export default {
 			required: true,
 			default: '',
 		},
+		isDisabledButton: Boolean,
 	},
 	provide() {
 		return {
@@ -40,22 +41,30 @@ export default {
 	},
 	data() {
 		return {
-			isValid: {},
-			isDisabledButton: false,
+			validations: {},
+			isValid: false,
 		}
 	},
 	watch: {
 		'$route.path': {
 			deep: true,
 			handler() {
-				this.isValid = {}
+				this.validations = {}
+				this.isValid = false
 			},
 		},
 	},
 	methods: {
 		checkValidInput(isValid, type) {
-			this.$set(this.isValid, type, isValid)
-			this.isDisabledButton = Object.values(this.isValid).some(valid => !valid)
+			this.$set(this.validations, type, isValid)
+			this.isValid = !Object.values(this.validations).some(valid => !valid)
+		},
+		eventHandler(event) {
+			event.preventDefault()
+			if (this.isValid) {
+				this.$emit('submit')
+			}
+			this.$root.$emit('set-validation')
 		},
 	},
 }
