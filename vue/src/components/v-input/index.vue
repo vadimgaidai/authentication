@@ -74,11 +74,21 @@ export default {
 		value() {
 			this.setValidation(true)
 		},
+		'$route.path': {
+			deep: true,
+			handler() {
+				this.setValidation(false)
+			},
+		},
 	},
 	mounted() {
+		this.setValidation(false)
 		this.$root.$on('set-validation', () => {
 			this.setValidation(true)
 		})
+		// this.$root.$on('reset-data', () => {
+		// 	this.$emit('input', '')
+		// })
 	},
 	methods: {
 		checkIsValid(isError) {

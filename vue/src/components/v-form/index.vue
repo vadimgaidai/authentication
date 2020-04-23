@@ -61,10 +61,11 @@ export default {
 		},
 		eventHandler(event) {
 			event.preventDefault()
+			this.$root.$emit('set-validation')
 			if (this.isValid) {
 				this.$emit('submit')
+				this.$root.$emit('reset-data')
 			}
-			this.$root.$emit('set-validation')
 		},
 	},
 }
