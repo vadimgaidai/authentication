@@ -68,11 +68,12 @@ export default {
 			isPasswordVisible: false,
 			inputType: null,
 			isValid: false,
+			isReset: false,
 		}
 	},
 	watch: {
 		value() {
-			this.setValidation(true)
+			this.setValidation(!this.isReset)
 		},
 		'$route.path': {
 			deep: true,
@@ -86,9 +87,13 @@ export default {
 		this.$root.$on('set-validation', () => {
 			this.setValidation(true)
 		})
-		// this.$root.$on('reset-data', () => {
-		// 	this.$emit('input', '')
-		// })
+		this.$root.$on('reset-data', () => {
+			this.isReset = true
+			this.$emit('input', '')
+			setTimeout(() => {
+				this.isReset = false
+			}, 1)
+		})
 	},
 	methods: {
 		checkIsValid(isError) {
