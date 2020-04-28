@@ -4,9 +4,8 @@ export const load = async url => {
 			method: 'GET',
 			mode: 'cors',
 		})
-		const responseData = await response.json()
 		return {
-			data: responseData,
+			data: await response.json(),
 			request: {
 				status: response.status,
 				url: response.url,
@@ -18,7 +17,7 @@ export const load = async url => {
 	}
 }
 
-export const send = async (url, data) => {
+export const send = async (url, data = {}) => {
 	try {
 		const response = await fetch(url, {
 			method: 'POST',
@@ -27,9 +26,8 @@ export const send = async (url, data) => {
 				'Content-Type': 'application/json',
 			},
 		})
-		const responseData = await response.json()
 		return {
-			data: JSON.stringify(responseData),
+			data: await response.json(),
 			request: {
 				status: response.status,
 				url: response.url,

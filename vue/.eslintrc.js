@@ -67,6 +67,7 @@ module.exports = {
 		],
 		'vue/valid-v-bind-sync': 'error',
 		'vue/valid-v-slot': 'error',
+		'no-empty': ['error', { allowEmptyCatch: true }],
 		'no-plusplus': 'off',
 		'no-param-reassign': 'off',
 		'no-underscore-dangle': 'off',

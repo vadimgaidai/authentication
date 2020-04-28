@@ -50,6 +50,7 @@
 	</section>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import { required, length, name, email, password } from '@/utils/validation'
 import VForm from '@/components/v-form'
 import VInput from '@/components/v-input'
@@ -101,13 +102,23 @@ export default {
 		this.checkAuthType()
 	},
 	methods: {
+		...mapActions('auth', ['signUpHandler', 'signInHandler']),
 		checkAuthType() {
 			this.$route.name === 'signup'
 				? (this.isSignUp = true)
 				: (this.isSignUp = false)
 		},
 		sendDataForm() {
-			console.log('sendDataForm')
+			this.isSignUp ? this.onSignUp() : this.onSignIn()
+		},
+		async onSignUp() {
+			await this.signUpHandler(this.formData)
+		},
+		async onSignIn() {
+			const error = await this.signInHandler(this.formData)
+			if (!error) {
+				await this.$router.push('/')
+			}
 		},
 	},
 }
