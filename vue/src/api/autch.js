@@ -20,4 +20,13 @@ export default ({ send }) => ({
 			}
 		)
 	},
+	refreshToken() {
+		return send(
+			`https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
+			{
+				grant_type: 'refresh_token',
+				refresh_token: localStorage.getItem('refresh_token'),
+			}
+		)
+	},
 })

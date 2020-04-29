@@ -19,8 +19,10 @@ api({
 
 Vue.config.productionTip = false
 
-new Vue({
-	router,
-	store,
-	render: h => h(App),
-}).$mount('#app')
+store.dispatch('initial').then(() => {
+	new Vue({
+		router,
+		store,
+		render: h => h(App),
+	}).$mount('#app')
+})

@@ -1,4 +1,10 @@
 // eslint-disable-next-line import/prefer-default-export
 export const fetchJWT = () => {
-	console.log(123)
+	// return authorization header with jwt token
+	const user = JSON.parse(localStorage.getItem('user'))
+
+	if (user && user.token) {
+		return { Authorization: `Bearer ${user.token}` }
+	}
+	return {}
 }
