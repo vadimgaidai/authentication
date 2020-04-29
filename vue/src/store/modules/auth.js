@@ -57,11 +57,16 @@ export default {
 				return error
 			}
 		},
-		async loadUser() {
-			const response = await this._vm.$api.autch
-				.getUser(localStorage.getItem('access_token'))
-				.catch(() => {})
-			console.log(response)
+		async loadUser({ commit }) {
+			try {
+				const { data } = await this._vm.$api.autch.getUser(
+					localStorage.getItem('access_token')
+				)
+				const payload = data?.users.find(user => user)
+				const { name, email, localId } = payload
+				commit('setUser', { name, email, localId })
+				commit('setAuthentication', true)
+			} catch {}
 		},
 	},
 }

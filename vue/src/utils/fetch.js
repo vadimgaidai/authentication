@@ -6,11 +6,7 @@ export const load = async url => {
 	return response.ok
 		? {
 				data: await response.json(),
-				request: {
-					status: response.status,
-					url: response.url,
-					method: 'GET',
-				},
+				request: response,
 		  }
 		: Promise.reject(response)
 }
@@ -26,11 +22,7 @@ export const send = async (url, data = {}) => {
 	return response.ok
 		? {
 				data: await response.json(),
-				request: {
-					status: response.status,
-					url: response.url,
-					method: 'POST',
-				},
+				request: response,
 		  }
 		: Promise.reject(response)
 }

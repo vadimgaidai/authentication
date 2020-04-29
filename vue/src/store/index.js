@@ -16,23 +16,19 @@ const store = new Vuex.Store({
 		auth,
 	},
 	actions: {
-		async initial({ dispatch, state }) {
-			const { auth: autchModule } = state
+		async initial({ dispatch }) {
 			try {
 				await dispatch('updateTokens')
-				if (autchModule.isAuthentication) {
-					await dispatch('autch/loadUser')
-				}
 			} catch {}
 		},
-		setAccessToken(accessToken) {
+		setAccessToken(ctx, accessToken) {
 			localStorage.setItem('access_token', accessToken)
 		},
-		setRefreshToken(refreshToken) {
+		setRefreshToken(ctx, refreshToken) {
 			localStorage.setItem('refresh_token', refreshToken)
 		},
-		setExpiresIn(expiresIn) {
-			localStorage.setItem('expires_in', Date.now() / 1000 + expiresIn)
+		setExpiresIn(ctx, expiresIn) {
+			localStorage.setItem('expires_in', expiresIn)
 		},
 		async updateTokens({ dispatch, commit }) {
 			if (!localStorage.getItem('refresh_token')) {
@@ -45,15 +41,16 @@ const store = new Vuex.Store({
 				dispatch('setAccessToken', data.access_token)
 				dispatch('setRefreshToken', data.refresh_token)
 				dispatch('setExpiresIn', data.expires_in)
+				await dispatch('auth/loadUser')
 			} catch {
 				dispatch('resetLocalStorage')
 				commit('resetState')
 			}
 		},
-		resetLocalStorage() {
-			localStorage.setItem('access_token', null)
-			localStorage.setItem('refresh_token', null)
-			localStorage.setItem('expires_in', null)
+		resetLocalStorage({ dispatch }) {
+			dispatch('setAccessToken', null)
+			dispatch('setRefreshToken', null)
+			dispatch('setExpiresIn', null)
 		},
 	},
 	mutations: {
