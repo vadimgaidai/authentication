@@ -21,17 +21,17 @@ const store = new Vuex.Store({
 			try {
 				await dispatch('updateTokens')
 				if (autchModule.isAuthentication) {
-					// fetch user
+					await dispatch('autch/loadUser')
 				}
 			} catch {}
 		},
-		setAccessToken(state, accessToken) {
+		setAccessToken(accessToken) {
 			localStorage.setItem('access_token', accessToken)
 		},
-		setRefreshToken(state, refreshToken) {
+		setRefreshToken(refreshToken) {
 			localStorage.setItem('refresh_token', refreshToken)
 		},
-		setExpiresIn(state, expiresIn) {
+		setExpiresIn(expiresIn) {
 			localStorage.setItem('expires_in', Date.now() / 1000 + expiresIn)
 		},
 		async updateTokens({ dispatch, commit }) {
@@ -39,7 +39,9 @@ const store = new Vuex.Store({
 				return
 			}
 			try {
-				const { data } = await this._vm.$api.autch.refreshToken()
+				const { data } = await this._vm.$api.autch.refreshToken(
+					localStorage.getItem('refresh_token')
+				)
 				dispatch('setAccessToken', data.access_token)
 				dispatch('setRefreshToken', data.refresh_token)
 				dispatch('setExpiresIn', data.expires_in)

@@ -20,12 +20,20 @@ export default ({ send }) => ({
 			}
 		)
 	},
-	refreshToken() {
+	getUser(idToken) {
+		return send(
+			`${process.env.VUE_APP_API}lookup?key=${process.env.VUE_APP_API_KEY}`,
+			{
+				idToken,
+			}
+		)
+	},
+	refreshToken(token) {
 		return send(
 			`https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
 			{
 				grant_type: 'refresh_token',
-				refresh_token: localStorage.getItem('refresh_token'),
+				refresh_token: token,
 			}
 		)
 	},

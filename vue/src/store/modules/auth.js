@@ -42,6 +42,8 @@ export default {
 				dispatch('setData', data)
 				return false
 			} catch (error) {
+				console.log(error)
+
 				return error
 			}
 		},
@@ -54,6 +56,12 @@ export default {
 			} catch (error) {
 				return error
 			}
+		},
+		async loadUser() {
+			const response = await this._vm.$api.autch
+				.getUser(localStorage.getItem('access_token'))
+				.catch(() => {})
+			console.log(response)
 		},
 	},
 }
