@@ -17,7 +17,7 @@ export default {
 		},
 	},
 	actions: {
-		setData({ commit, dispatch }, userInfo = {}) {
+		setData({ commit }, userInfo = {}) {
 			const {
 				displayName: name,
 				email,
@@ -27,14 +27,14 @@ export default {
 				expiresIn,
 			} = userInfo
 
-			dispatch('setAccessToken', idToken, { root: true })
-			dispatch('setRefreshToken', refreshToken, { root: true })
-			dispatch('setExpiresIn', expiresIn, { root: true })
+			commit('setAccessToken', idToken, { root: true })
+			commit('setRefreshToken', refreshToken, { root: true })
+			commit('setExpiresIn', expiresIn, { root: true })
 			commit('setUser', { name, email, localId })
 		},
 		async signUpHandler({ dispatch }, { name, email, password }) {
 			try {
-				const { data } = await this._vm.$api.autch.sendSignUp(
+				const { data } = await this._vm.$api.auth.sendSignUp(
 					name,
 					email,
 					password
@@ -42,14 +42,12 @@ export default {
 				dispatch('setData', data)
 				return false
 			} catch (error) {
-				console.log(error)
-
 				return error
 			}
 		},
 		async signInHandler({ commit, dispatch }, { email, password }) {
 			try {
-				const { data } = await this._vm.$api.autch.sendSignIn(email, password)
+				const { data } = await this._vm.$api.auth.sendSignIn(email, password)
 				dispatch('setData', data)
 				commit('setAuthentication', true)
 				return false
@@ -59,14 +57,21 @@ export default {
 		},
 		async loadUser({ commit }) {
 			try {
-				const { data } = await this._vm.$api.autch.getUser(
+				const { data } = await this._vm.$api.auth.getUser(
 					localStorage.getItem('access_token')
 				)
-				const payload = data?.users.find(user => user)
-				const { name, email, localId } = payload
+				const { displayName: name, email, localId } = data?.users.find(
+					user => user
+				)
+
 				commit('setUser', { name, email, localId })
 				commit('setAuthentication', true)
 			} catch {}
+		},
+		logoutHandler({ commit, dispatch }) {
+			commit('setAuthentication', false)
+			commit('resetState', null, { root: true })
+			dispatch('resetLocalStorage', null, { root: true })
 		},
 	},
 }

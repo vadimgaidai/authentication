@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import autch from './autch'
+import auth from './auth'
 
 export default ({ load, send, store }) => {
 	const api = {}
 	const modules = {
-		autch,
+		auth,
 	}
 	Object.entries(modules).forEach(([key, value]) => {
 		api[key] = value({

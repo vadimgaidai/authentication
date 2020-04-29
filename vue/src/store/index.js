@@ -21,6 +21,30 @@ const store = new Vuex.Store({
 				await dispatch('updateTokens')
 			} catch {}
 		},
+		resetLocalStorage({ commit }) {
+			commit('setAccessToken', null)
+			commit('setRefreshToken', null)
+			commit('setExpiresIn', null)
+		},
+		async updateTokens({ commit, dispatch }) {
+			if (!localStorage.getItem('refresh_token')) {
+				return
+			}
+			try {
+				const { data } = await this._vm.$api.auth.refreshToken(
+					localStorage.getItem('refresh_token')
+				)
+				commit('setAccessToken', data.access_token)
+				commit('setRefreshToken', data.refresh_token)
+				commit('setExpiresIn', data.expires_in)
+				await dispatch('auth/loadUser')
+			} catch {
+				dispatch('resetLocalStorage')
+				commit('resetState')
+			}
+		},
+	},
+	mutations: {
 		setAccessToken(ctx, accessToken) {
 			localStorage.setItem('access_token', accessToken)
 		},
@@ -30,30 +54,6 @@ const store = new Vuex.Store({
 		setExpiresIn(ctx, expiresIn) {
 			localStorage.setItem('expires_in', expiresIn)
 		},
-		async updateTokens({ dispatch, commit }) {
-			if (!localStorage.getItem('refresh_token')) {
-				return
-			}
-			try {
-				const { data } = await this._vm.$api.autch.refreshToken(
-					localStorage.getItem('refresh_token')
-				)
-				dispatch('setAccessToken', data.access_token)
-				dispatch('setRefreshToken', data.refresh_token)
-				dispatch('setExpiresIn', data.expires_in)
-				await dispatch('auth/loadUser')
-			} catch {
-				dispatch('resetLocalStorage')
-				commit('resetState')
-			}
-		},
-		resetLocalStorage({ dispatch }) {
-			dispatch('setAccessToken', null)
-			dispatch('setRefreshToken', null)
-			dispatch('setExpiresIn', null)
-		},
-	},
-	mutations: {
 		resetState(state) {
 			Object.keys(initialState).forEach(key => {
 				state[key] = initialState[key]

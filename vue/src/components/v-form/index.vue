@@ -1,5 +1,5 @@
 <template>
-	<form :class="$style.form" @submit="eventHandler">
+	<form :class="$style.form" @submit.prevent="eventHandler">
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
@@ -59,8 +59,7 @@ export default {
 			this.$set(this.validations, type, isValid)
 			this.isValid = !Object.values(this.validations).some(valid => !valid)
 		},
-		eventHandler(event) {
-			event.preventDefault()
+		eventHandler() {
 			this.$root.$emit('set-validation')
 			if (this.isValid) {
 				this.$emit('submit')
