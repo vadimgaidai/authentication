@@ -13,7 +13,8 @@
 			/>
 			<button
 				v-if="type === 'password'"
-				:class="$style.button"
+				:class="[$style.button, { [$style.buttonDisabled]: !value }]"
+				:disabled="!value"
 				@click.prevent="setVisiblePassword"
 			>
 				<icon

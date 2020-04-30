@@ -24,10 +24,8 @@ const store = new Vuex.Store({
 				await dispatch('updateTokens')
 			} catch {}
 		},
-		resetLocalStorage({ commit }) {
-			commit('setAccessToken', '')
-			commit('setRefreshToken', '')
-			commit('setExpiresIn', '')
+		resetLocalStorage() {
+			localStorage.clear()
 		},
 		async updateTokens({ commit, dispatch }) {
 			try {

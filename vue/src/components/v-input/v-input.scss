@@ -69,6 +69,11 @@
 			color: $primary-btn;
 		}
 	}
+
+	&Disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
 }
 
 .icon {
