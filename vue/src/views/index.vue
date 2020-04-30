@@ -3,7 +3,11 @@
 		<img :class="$style.image" alt="Vue logo" src="@/assets/images/logo.png" />
 		<h1 :class="$style.title">Hallo, {{ userName }}!</h1>
 		<p :class="$style.description">Welcome to Your Vue.js App</p>
-		<VButton value="Logout" @click="onLogoutClickHandler" />
+		<VButton @click="onLogoutClickHandler">
+			<template #button>
+				<span> Logout </span>
+			</template>
+		</VButton>
 	</div>
 </template>
 <script>

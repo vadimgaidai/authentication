@@ -3,10 +3,15 @@
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
-			:value="buttonValue"
+			:class="$style.button"
 			:type-button="typeButton"
-			:disabled="isDisabledButton"
-		/>
+			:disabled="isLocaleDisabledButton || isDisabledButton"
+		>
+			<template #button>
+				<icon v-if="isLoading" name="three-dots" width="50" height="10" />
+				<span v-else> {{ buttonValue }} </span>
+			</template>
+		</VButton>
 	</form>
 </template>
 <script>
@@ -33,6 +38,7 @@ export default {
 			default: '',
 		},
 		isDisabledButton: Boolean,
+		isLoading: Boolean,
 	},
 	provide() {
 		return {
@@ -43,6 +49,7 @@ export default {
 		return {
 			validations: {},
 			isValid: false,
+			isLocaleDisabledButton: false,
 		}
 	},
 	watch: {
@@ -52,6 +59,12 @@ export default {
 				this.validations = {}
 				this.isValid = false
 			},
+		},
+		isLoading() {
+			this.isLocaleDisabledButton = this.isLoading
+			if (!this.isLoading) {
+				this.$root.$emit('reset-data')
+			}
 		},
 	},
 	methods: {
@@ -63,7 +76,6 @@ export default {
 			this.$root.$emit('set-validation')
 			if (this.isValid) {
 				this.$emit('submit')
-				// this.$root.$emit('reset-data')
 			}
 		},
 	},

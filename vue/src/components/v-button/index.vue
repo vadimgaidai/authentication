@@ -6,19 +6,15 @@
 			{ [$style.disabled]: disabled },
 		]"
 		:disabled="disabled"
+		@click="$emit('click')"
 	>
-		{{ value }}
+		<slot name="button" />
 	</button>
 </template>
 <script>
 export default {
 	name: 'VButton',
 	props: {
-		value: {
-			type: String,
-			required: true,
-			default: '',
-		},
 		typeButton: {
 			type: String,
 			default: 'default',

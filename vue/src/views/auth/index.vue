@@ -11,6 +11,7 @@
 				:title="isSignUp ? 'Sign Up' : 'Sign In'"
 				:button-value="isSignUp ? 'Create new account' : 'Login to account'"
 				type-button="primary"
+				:is-loading="isLoading"
 				@submit="sendDataForm"
 			>
 				<template #form-content>
@@ -63,7 +64,7 @@ export default {
 	},
 	data() {
 		return {
-			isVisible: false,
+			isLoading: false,
 			isSignUp: false,
 			formData: {
 				name: '',
@@ -111,10 +112,14 @@ export default {
 			this.isSignUp ? this.onSignUp() : this.onSignIn()
 		},
 		async onSignUp() {
+			this.isLoading = true
 			await this.signUpHandler(this.formData)
+			this.isLoading = false
 		},
 		async onSignIn() {
+			this.isLoading = true
 			const error = await this.signInHandler(this.formData)
+			this.isLoading = false
 			if (!error) {
 				await this.$router.push('/')
 			}

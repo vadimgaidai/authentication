@@ -34,12 +34,7 @@ export default {
 		},
 		async signUpHandler({ dispatch }, { name, email, password }) {
 			try {
-				const { data } = await this._vm.$api.auth.sendSignUp(
-					name,
-					email,
-					password
-				)
-				dispatch('setData', data)
+				await this._vm.$api.auth.sendSignUp(name, email, password)
 				return false
 			} catch (error) {
 				return error

@@ -92,7 +92,7 @@ export default {
 			this.$emit('input', '')
 			setTimeout(() => {
 				this.isReset = false
-			}, 1)
+			})
 		})
 	},
 	methods: {
