@@ -8,6 +8,7 @@
 				:type="inputType || type"
 				:placeholder="preloader"
 				:value="value"
+				autocomplete
 				@blur="setValidation(true)"
 				@input="$emit('input', $event.target.value)"
 			/>
@@ -15,7 +16,7 @@
 				v-if="type === 'password'"
 				:class="[$style.button, { [$style.buttonDisabled]: !value }]"
 				:disabled="!value"
-				@click.prevent="setVisiblePassword"
+				@click.stop.prevent="setVisiblePassword"
 			>
 				<icon
 					:class="$style.icon"
@@ -85,13 +86,16 @@ export default {
 	},
 	mounted() {
 		this.setValidation(false)
-		this.$root.$on('set-validation', () => {
-			this.setValidation(true)
+		this.$bus.$on('set-validation', () => {
+			this.$nextTick(() => {
+				this.setValidation(true)
+			})
 		})
-		this.$root.$on('reset-data', () => {
+
+		this.$bus.$on('reset-data', () => {
 			this.isReset = true
 			this.$emit('input', '')
-			setTimeout(() => {
+			this.$nextTick(() => {
 				this.isReset = false
 			})
 		})

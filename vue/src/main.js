@@ -10,6 +10,10 @@ import './assets/style/style.scss'
 
 // plugins
 import './plugins/svgicon'
+import eventBus from './plugins/eventBus'
+
+Vue.prototype.$bus = eventBus
+store.$bus = eventBus
 
 api({
 	load,

@@ -63,7 +63,7 @@ export default {
 		isLoading() {
 			this.isLocaleDisabledButton = this.isLoading
 			if (!this.isLoading) {
-				this.$root.$emit('reset-data')
+				this.$bus.$emit('reset-data')
 			}
 		},
 	},
@@ -73,7 +73,7 @@ export default {
 			this.isValid = !Object.values(this.validations).some(valid => !valid)
 		},
 		eventHandler() {
-			this.$root.$emit('set-validation')
+			this.$bus.$emit('set-validation')
 			if (this.isValid) {
 				this.$emit('submit')
 			}
