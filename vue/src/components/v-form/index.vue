@@ -5,7 +5,7 @@
 		<VButton
 			:class="$style.button"
 			:type-button="typeButton"
-			:disabled="isLocaleDisabledButton || isDisabledButton"
+			:disabled="isLoading || isDisabledButton"
 		>
 			<template #button>
 				<icon v-if="isLoading" name="three-dots" width="50" height="10" />
@@ -49,7 +49,6 @@ export default {
 		return {
 			validations: {},
 			isValid: false,
-			isLocaleDisabledButton: false,
 		}
 	},
 	watch: {
@@ -59,12 +58,6 @@ export default {
 				this.validations = {}
 				this.isValid = false
 			},
-		},
-		isLoading() {
-			this.isLocaleDisabledButton = this.isLoading
-			if (!this.isLoading) {
-				// this.$bus.$emit('reset-data')
-			}
 		},
 	},
 	methods: {

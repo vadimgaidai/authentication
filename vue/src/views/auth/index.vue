@@ -113,7 +113,10 @@ export default {
 		},
 		async onSignUp() {
 			this.isLoading = true
-			await this.signUpHandler(this.formData)
+			const error = await this.signUpHandler(this.formData)
+			if (!error) {
+				this.$bus.$emit('reset-data')
+			}
 			this.isLoading = false
 		},
 		async onSignIn() {

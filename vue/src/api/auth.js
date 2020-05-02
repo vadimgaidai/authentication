@@ -1,10 +1,4 @@
 export default ({ send }) => ({
-	test() {
-		return send({
-			url: 'https://www.google.com.ua/',
-			jwt: true,
-		})
-	},
 	sendSignUp(name, email, password) {
 		return send({
 			url: `${process.env.VUE_APP_API}signUp?key=${process.env.VUE_APP_API_KEY}`,
