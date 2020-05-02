@@ -8,7 +8,6 @@
 				:type="inputType || type"
 				:placeholder="preloader"
 				:value="value"
-				autocomplete
 				@blur="setValidation(true)"
 				@input="$emit('input', $event.target.value)"
 			/>

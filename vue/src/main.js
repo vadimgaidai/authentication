@@ -14,7 +14,6 @@ import './plugins/notifications'
 import eventBus from './plugins/eventBus'
 
 Vue.prototype.$bus = eventBus
-store.$bus = eventBus
 
 api({
 	load,

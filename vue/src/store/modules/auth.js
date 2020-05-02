@@ -87,7 +87,7 @@ export default {
 				return error
 			}
 		},
-		async loadUser({ commit }) {
+		async loadUser({ commit, dispatch }) {
 			try {
 				const { data } = await this._vm.$api.auth.getUser(
 					localStorage.getItem('access_token')
@@ -97,7 +97,10 @@ export default {
 				)
 				commit('setUser', { name, email, localId })
 				commit('setAuthentication', true)
-			} catch {}
+			} catch (error) {
+				const { status } = error
+				dispatch('notificationServerError', status, { root: true })
+			}
 		},
 		logoutHandler({ commit, dispatch }) {
 			commit('setAuthentication', false)
