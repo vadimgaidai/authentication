@@ -10,6 +10,7 @@ import './assets/style/style.scss'
 
 // plugins
 import './plugins/svgicon'
+import './plugins/notifications'
 import eventBus from './plugins/eventBus'
 
 Vue.prototype.$bus = eventBus

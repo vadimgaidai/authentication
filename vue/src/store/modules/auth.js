@@ -37,6 +37,24 @@ export default {
 				await this._vm.$api.auth.sendSignUp(name, email, password)
 				return false
 			} catch (error) {
+				const { status } = error
+				if (status === 400) {
+					dispatch(
+						'notification',
+						{
+							type: 'error',
+							title: 'An account with this email address already exists',
+							text: 'Please check the correctness of the entered data',
+						},
+						{ root: true }
+					)
+				} else {
+					dispatch(
+						'notification',
+						{ type: 'error', title: 'Error', text: 'Error' },
+						{ root: true }
+					)
+				}
 				return error
 			}
 		},
@@ -47,6 +65,24 @@ export default {
 				commit('setAuthentication', true)
 				return false
 			} catch (error) {
+				const { status } = error
+				if (status === 400) {
+					dispatch(
+						'notification',
+						{
+							type: 'error',
+							title: 'Invalid email or password',
+							text: 'Please check the correctness of the entered data',
+						},
+						{ root: true }
+					)
+				} else {
+					dispatch(
+						'notification',
+						{ type: 'error', title: 'Error', text: 'Error' },
+						{ root: true }
+					)
+				}
 				return error
 			}
 		},
@@ -58,7 +94,6 @@ export default {
 				const { displayName: name, email, localId } = data?.users.find(
 					user => user
 				)
-
 				commit('setUser', { name, email, localId })
 				commit('setAuthentication', true)
 			} catch {}

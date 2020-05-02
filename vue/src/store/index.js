@@ -41,6 +41,9 @@ const store = new Vuex.Store({
 				commit('resetState')
 			}
 		},
+		notification(_, { type = '', title = '', text = '' }) {
+			Vue.notify({ type, title, text, speed: 600 })
+		},
 	},
 	mutations: {
 		setAccessToken(_, accessToken) {

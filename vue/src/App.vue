@@ -1,5 +1,6 @@
 <template>
 	<div id="app">
+		<notifications position="top right" />
 		<router-view />
 		<Preloader v-if="preloader" />
 	</div>

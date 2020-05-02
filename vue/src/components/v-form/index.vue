@@ -63,7 +63,7 @@ export default {
 		isLoading() {
 			this.isLocaleDisabledButton = this.isLoading
 			if (!this.isLoading) {
-				this.$bus.$emit('reset-data')
+				// this.$bus.$emit('reset-data')
 			}
 		},
 	},
