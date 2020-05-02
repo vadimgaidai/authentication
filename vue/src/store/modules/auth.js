@@ -35,6 +35,15 @@ export default {
 		async signUpHandler({ dispatch }, { name, email, password }) {
 			try {
 				await this._vm.$api.auth.sendSignUp(name, email, password)
+				dispatch(
+					'notification',
+					{
+						type: 'success',
+						title: 'Registration completed successfully',
+						text: 'Now you can log in to your account',
+					},
+					{ root: true }
+				)
 				return false
 			} catch (error) {
 				const { status } = error
@@ -49,11 +58,7 @@ export default {
 						{ root: true }
 					)
 				} else {
-					dispatch(
-						'notification',
-						{ type: 'error', title: 'Error', text: 'Error' },
-						{ root: true }
-					)
+					dispatch('notificationServerError', status, { root: true })
 				}
 				return error
 			}
@@ -77,11 +82,7 @@ export default {
 						{ root: true }
 					)
 				} else {
-					dispatch(
-						'notification',
-						{ type: 'error', title: 'Error', text: 'Error' },
-						{ root: true }
-					)
+					dispatch('notificationServerError', status, { root: true })
 				}
 				return error
 			}

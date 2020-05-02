@@ -15,6 +15,40 @@ const store = new Vuex.Store({
 	modules: {
 		auth,
 	},
+	state: {
+		serverErrors: [403, 404, 405, 415, 422, 429, 500],
+		errorsApi: {
+			403: {
+				title: 'Forbidden',
+				message: 'This resource is not intended for public access',
+			},
+			404: {
+				title: 'Not found',
+				message: 'Try searching at a different address',
+			},
+			405: {
+				title: 'Method not allowed',
+				message: 'Invalid resource request method',
+			},
+			415: {
+				title: 'Unsupported Media-Type',
+				message: 'Part of the request was made in an unsupported format',
+			},
+			422: {
+				title: 'Unprocessable Entity',
+				message:
+					'The request is accepted and understood, but cannot be completed due to semantic errors',
+			},
+			429: {
+				title: 'Too Many Requests',
+				message: 'Too many requests in a short amount of time',
+			},
+			500: {
+				title: 'Internal server error',
+				message: 'The server cannot process the request due to internal errors',
+			},
+		},
+	},
 	actions: {
 		async initial({ dispatch }) {
 			try {
@@ -42,7 +76,24 @@ const store = new Vuex.Store({
 			}
 		},
 		notification(_, { type = '', title = '', text = '' }) {
-			Vue.notify({ type, title, text, speed: 600 })
+			Vue.notify({ type, title, text, speed: 500 })
+		},
+		notificationServerError({ state }, status) {
+			if (status && state.serverErrors.includes(status)) {
+				Vue.notify({
+					type: 'error',
+					title: state.errorsApi[status].title,
+					text: state.errorsApi[status].message,
+					speed: 500,
+				})
+			} else {
+				Vue.notify({
+					type: 'error',
+					title: 'Unknown error',
+					text: 'Try reloading the page',
+					speed: 500,
+				})
+			}
 		},
 	},
 	mutations: {
