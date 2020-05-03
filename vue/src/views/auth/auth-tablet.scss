@@ -1,0 +1,15 @@
+.auth {
+	@include layout(1, 1fr, 0);
+}
+
+.wrapper {
+	align-self: center;
+
+	&:first-child {
+		display: none;
+	}
+
+	&:last-child {
+		justify-self: center;
+	}
+}

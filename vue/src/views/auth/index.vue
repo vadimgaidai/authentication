@@ -132,4 +132,7 @@ export default {
 </script>
 <style lang="scss" module>
 @import './auth.scss';
+@include media('tablet') {
+	@import './auth-tablet.scss';
+}
 </style>

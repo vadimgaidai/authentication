@@ -76,4 +76,7 @@ export default {
 </script>
 <style lang="scss" module>
 @import './v-form.scss';
+@include media('mobile') {
+	@import './v-form-mobile.scss';
+}
 </style>

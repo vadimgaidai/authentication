@@ -3,7 +3,7 @@
 		<img :class="$style.image" alt="Vue logo" src="@/assets/images/logo.png" />
 		<h1 :class="$style.title">Hallo, {{ userName }}!</h1>
 		<p :class="$style.description">Welcome to Your Vue.js App</p>
-		<VButton @click="onLogoutClickHandler">
+		<VButton :class="$style.button" @click="onLogoutClickHandler">
 			<template #button>
 				<span> Logout </span>
 			</template>
@@ -36,11 +36,43 @@ export default {
 </script>
 <style lang="scss" module>
 .main {
-	display: flex;
-	align-items: center;
+	display: grid;
+	align-content: center;
 	justify-content: center;
-	flex-direction: column;
 	width: 100vw;
 	height: 100vh;
+	padding: 1.5rem;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.image {
+	margin: 0 auto 4rem;
+	animation: image infinite 5s linear;
+	@keyframes image {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+}
+
+.title {
+	text-align: center;
+	font-size: 5rem;
+	font-weight: bold;
+	@include media('mobile') {
+		font-size: 3rem;
+	}
+}
+
+.description {
+	text-align: center;
+	font-size: 2.3rem;
+	@include media('mobile') {
+		font-size: 1.5rem;
+	}
 }
 </style>
