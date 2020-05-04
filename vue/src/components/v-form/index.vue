@@ -63,10 +63,12 @@ export default {
 	methods: {
 		checkValidInput(isValid, type) {
 			this.$set(this.validations, type, isValid)
-			this.isValid = !Object.values(this.validations).some(valid => !valid)
+			this.$nextTick(() => {
+				this.isValid = !Object.values(this.validations).some(valid => !valid)
+			})
 		},
 		eventHandler() {
-			this.$bus.$emit('set-validation')
+			this.$bus.$emit('check-valid')
 			if (this.isValid) {
 				this.$emit('submit')
 			}

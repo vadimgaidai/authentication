@@ -68,7 +68,6 @@ export default {
 			error: null,
 			isPasswordVisible: false,
 			inputType: null,
-			isValid: false,
 			isReset: false,
 		}
 	},
@@ -85,12 +84,9 @@ export default {
 	},
 	mounted() {
 		this.setValidation(false)
-		this.$bus.$on('set-validation', () => {
-			this.$nextTick(() => {
-				this.setValidation(true)
-			})
+		this.$bus.$on('check-valid', () => {
+			this.checkIsValid(true)
 		})
-
 		this.$bus.$on('reset-data', () => {
 			this.isReset = true
 			this.$emit('input', '')
@@ -110,8 +106,7 @@ export default {
 			})
 		},
 		setValidation(isError) {
-			this.isValid = this.checkIsValid(isError)
-			this.checkValidInput(!this.isValid, this.type)
+			this.checkValidInput(!this.checkIsValid(isError), this.type)
 		},
 		setVisiblePassword() {
 			this.isPasswordVisible = !this.isPasswordVisible
