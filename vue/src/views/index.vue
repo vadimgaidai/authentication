@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.main">
 		<icon :class="$style.image" name="vuejs" width="150" height="150" />
-		<h1 v-if="userName" :class="$style.title">Hallo, {{ userName }}!</h1>
+		<h1 v-if="userName" :class="$style.title">Hello, {{ userName }}!</h1>
 		<p :class="$style.description">Welcome to Your Vue.js App</p>
 		<VButton :class="$style.button" @click="onLogoutClickHandler">
 			<template #button>
