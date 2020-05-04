@@ -28,7 +28,7 @@ export default ({ send }) => ({
 	},
 	refreshToken(token) {
 		return send({
-			url: `https://securetoken.googleapis.com/v1/token?key=${process.env.VUE_APP_API_KEY}`,
+			url: `${process.env.VUE_APP_TOKEN_RESET}/v1/token?key=${process.env.VUE_APP_API_KEY}`,
 			data: {
 				grant_type: 'refresh_token',
 				refresh_token: token,
