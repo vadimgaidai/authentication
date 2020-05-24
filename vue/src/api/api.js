@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import auth from './auth'
 
-export default ({ load, send, store }) => {
+export default ({ request, store }) => {
 	const api = {}
 	const modules = {
 		auth,
 	}
 	Object.entries(modules).forEach(([key, value]) => {
 		api[key] = value({
-			load,
-			send,
+			request,
 			store,
 		})
 	})

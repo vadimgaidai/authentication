@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import merge from 'lodash/merge'
 import store from '../store/index'
 
@@ -8,7 +9,7 @@ const optionsDefault = {
 const JWT = async () => {
 	const expiredIn = localStorage.getItem('expires_in')
 	const accessToken = localStorage.getItem('access_token')
-	const isExpired = !expiredIn || expiredIn < Date.now() / 1000
+	const isExpired = !expiredIn || expiredIn <= Date.now() / 1000
 	if (isExpired) {
 		await store.dispatch('updateTokens')
 		return localStorage.getItem('access_token')
@@ -16,30 +17,11 @@ const JWT = async () => {
 	return accessToken
 }
 
-export const load = async ({ url, method = 'GET', options, jwt = false }) => {
-	const response = await fetch(url, {
-		method,
-		mode: 'cors',
-		headers: jwt
-			? merge(
-					{ Authorization: `Bearer ${await JWT()}` },
-					options ?? optionsDefault
-			  )
-			: options ?? optionsDefault,
-	})
-	return response.ok
-		? {
-				data: await response.json(),
-				request: response,
-		  }
-		: Promise.reject(response)
-}
-
-export const send = async ({
+export const request = async ({
 	url,
 	data,
+	method = 'GET',
 	options,
-	method = 'POST',
 	jwt = false,
 }) => {
 	const response = await fetch(url, {
@@ -52,7 +34,7 @@ export const send = async ({
 			  )
 			: options ?? optionsDefault,
 	})
-	return response.ok
+	return response?.ok
 		? {
 				data: await response.json(),
 				request: response,

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { load, send } from '@/utils/fetch'
+import { request } from '@/utils/fetch'
 import api from './api/api'
 import App from './App.vue'
 import router from './router'
@@ -16,8 +16,7 @@ import eventBus from './plugins/eventBus'
 Vue.prototype.$bus = eventBus
 
 api({
-	load,
-	send,
+	request,
 	store,
 })
 
