@@ -89,16 +89,15 @@ export default {
 		},
 		async loadUser({ commit, dispatch }) {
 			try {
-				const { data } = await this._vm.$api.auth.getUser(
+				const {
+					data: { users },
+				} = await this._vm.$api.auth.getUser(
 					localStorage.getItem('access_token')
 				)
-				const { displayName: name, email, localId } = data?.users.find(
-					user => user
-				)
+				const { displayName: name, email, localId } = users.find(user => user)
 				commit('setUser', { name, email, localId })
 				commit('setAuthentication', true)
-			} catch (error) {
-				const { status } = error
+			} catch ({ status }) {
 				dispatch('notificationServerError', status, { root: true })
 			}
 		},

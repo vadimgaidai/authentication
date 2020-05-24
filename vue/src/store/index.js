@@ -63,12 +63,18 @@ const store = new Vuex.Store({
 		},
 		async updateTokens({ commit, dispatch }) {
 			try {
-				const { data } = await this._vm.$api.auth.refreshToken(
+				const {
+					data: {
+						access_token: accessToken,
+						refresh_token: refreshToken,
+						expires_in: expiresIn,
+					},
+				} = await this._vm.$api.auth.refreshToken(
 					localStorage.getItem('refresh_token')
 				)
-				commit('setAccessToken', data.access_token)
-				commit('setRefreshToken', data.refresh_token)
-				commit('setExpiresIn', data.expires_in)
+				commit('setAccessToken', accessToken)
+				commit('setRefreshToken', refreshToken)
+				commit('setExpiresIn', expiresIn)
 				await dispatch('auth/loadUser')
 			} catch {
 				dispatch('resetLocalStorage')

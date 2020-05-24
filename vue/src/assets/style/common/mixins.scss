@@ -1,5 +1,5 @@
 @mixin layout($repeat, $width, $c-gap) {
 	display: grid;
-	grid-template-columns: repeat($repeat, $width);
 	grid-column-gap: $c-gap;
+	grid-template-columns: repeat($repeat, $width);
 }

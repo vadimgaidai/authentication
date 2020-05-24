@@ -5,11 +5,11 @@
 }
 
 .text {
-	font-size: 1.4rem;
-	line-height: 2.2rem;
-	font-weight: 300;
 	padding-bottom: 0.5rem;
 	color: $form-color;
+	font-weight: 300;
+	font-size: 1.4rem;
+	line-height: 2.2rem;
 }
 
 .contaier {
@@ -20,15 +20,15 @@
 .input {
 	display: block;
 	width: 100%;
+	padding: 0.7rem 3rem 0.7rem 0;
+	color: $form-color;
+	font-weight: 300;
 	font-size: 1.7rem;
 	line-height: 2.2rem;
-	font-weight: 300;
-	padding: 0.7rem 3rem 0.7rem 0;
+	background-color: transparent;
 	border: 0.1rem solid transparent;
 	border-bottom: 0.2rem solid $primary-bg;
-	background-color: transparent;
 	transition: border-color $primary-transition;
-	color: $form-color;
 
 	&Error {
 		border-bottom-color: $error-color;
@@ -46,20 +46,20 @@
 .error {
 	position: absolute;
 	padding-top: 0.5rem;
+	color: $error-color;
+	font-weight: 300;
 	font-size: 1.4rem;
 	line-height: 1.4rem;
-	font-weight: 300;
-	color: $error-color;
 }
 
 .button {
 	position: absolute;
 	top: 50%;
 	right: 0.7rem;
-	padding: 0;
 	margin: 0;
-	border: none;
+	padding: 0;
 	background-color: transparent;
+	border: 0;
 	transform: translateY(-50%);
 	cursor: pointer;
 
@@ -71,12 +71,12 @@
 	}
 
 	&Disabled {
-		opacity: 0.5;
 		cursor: not-allowed;
+		opacity: 0.5;
 	}
 }
 
 .icon {
-	transition: color $primary-transition;
 	color: $form-color;
+	transition: color $primary-transition;
 }
