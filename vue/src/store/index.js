@@ -104,7 +104,7 @@ const store = new Vuex.Store({
 			localStorage.setItem('refresh_token', refreshToken)
 		},
 		setExpiresIn(_, expiresIn) {
-			localStorage.setItem('expires_in', expiresIn)
+			localStorage.setItem('expires_in', Date.now() / 1000 + expiresIn)
 		},
 		resetState(state) {
 			Object.keys(initialState).forEach(key => {
