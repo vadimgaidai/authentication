@@ -6,16 +6,22 @@ $reserve-fonts: sans-serif;
 $font-primary: 'OpenSans', $reserve-fonts;
 
 // Colors
-$primary-color: #fff;
-$link-color: #61dafb;
+$primary-color: #ffffff;
+$form-color: #131e41;
 $success-clolor: #2ecc71;
 $error-color: #e74c3c;
+$link-color: #1c01ff;
 
 // Backgrounds
-$primary-bg: #282c34;
+$primary-bg: #b0acf8;
+$form-bg: #ffffff;
+$default-btn: #84817a;
+$primary-btn: #5352ed;
 
 // Transition
 $primary-transition: 0.5s;
 
 // Sizes
-$max-width: 1440px;
+$header-height: 5rem;
+$footer-height: 5rem;
+$max-width: 144rem;

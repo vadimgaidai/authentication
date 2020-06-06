@@ -1,9 +1,9 @@
-import tests from './tests'
+import auth from './auth'
 
 export default ({ request, store }) => {
 	const api = {}
 	const modules = {
-		tests,
+		auth,
 	}
 	Object.entries(modules).forEach(([key, value]) => {
 		api[key] = value({ request, store })

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-function SvgLogo(props) {
+function SvgReact(props) {
 	return (
 		<svg viewBox="0 0 841.9 595.3" {...props}>
 			<g fill="#61DAFB">
@@ -11,4 +11,4 @@ function SvgLogo(props) {
 	)
 }
 
-export default SvgLogo
+export default SvgReact

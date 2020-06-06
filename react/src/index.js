@@ -7,15 +7,19 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from './redux/rootReducer'
 
-import Header from './components/header'
 import App from './containers/App'
-import Footer from './components/footer'
 
 import api from './api/api'
 import { request } from './utils/fetch'
 
 import * as serviceWorker from './serviceWorker'
 import './assets/style/index.scss'
+
+const loader = document.querySelector('.preloader')
+
+const showLoader = () => loader.classList.remove('preloader--hide')
+
+const hideLoader = () => loader.classList.add('preloader--hide')
 
 const entry = document.getElementById('root')
 
@@ -35,9 +39,7 @@ api({ request, store })
 ReactDOM.render(
 	<Provider store={store}>
 		<BrowserRouter>
-			<Header />
-			<App />
-			<Footer />
+			<App hideLoader={hideLoader} showLoader={showLoader} />
 		</BrowserRouter>
 	</Provider>,
 	entry

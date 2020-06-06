@@ -1,1 +1,10 @@
-//
+@mixin layout($repeat, $width, $c-gap) {
+	display: grid;
+	grid-column-gap: $c-gap;
+	grid-template-columns: repeat($repeat, $width);
+}
+
+@mixin same-size($sz) {
+	width: $sz;
+	height: $sz;
+}

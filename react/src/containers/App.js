@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ScrollToTop from 'react-router-scroll-top'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
 import Index from '../views/index'
-import Trial from '../views/trial'
 
-const App = () => {
+// eslint-disable-next-line react/prop-types
+const App = ({ hideLoader }) => {
+	useEffect(hideLoader, [])
 	return (
 		<ScrollToTop>
 			<Switch>
 				<Route path="/" component={Index} exact />
-				<Route path="/trial" component={Trial} />
 			</Switch>
 		</ScrollToTop>
 	)
