@@ -60,17 +60,18 @@ export default {
 }
 
 .title {
-	text-align: center;
-	font-size: 5rem;
 	font-weight: bold;
+	font-size: 5rem;
+	text-align: center;
+
 	@include media('mobile') {
 		font-size: 3rem;
 	}
 }
 
 .description {
-	text-align: center;
 	font-size: 2.3rem;
+	text-align: center;
 	@include media('mobile') {
 		font-size: 1.5rem;
 	}
