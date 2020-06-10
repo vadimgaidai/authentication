@@ -1,0 +1,82 @@
+.label {
+	position: relative;
+	display: block;
+	margin-top: 2.5rem;
+}
+
+.text {
+	padding-bottom: 0.5rem;
+	color: $form-color;
+	font-weight: 300;
+	font-size: 1.4rem;
+	line-height: 2.2rem;
+}
+
+.contaier {
+	position: relative;
+	width: 100%;
+}
+
+.input {
+	display: block;
+	width: 100%;
+	padding: 0.7rem 3rem 0.7rem 0;
+	color: $form-color;
+	font-weight: 300;
+	font-size: 1.7rem;
+	line-height: 2.2rem;
+	background-color: transparent;
+	border: 0.1rem solid transparent;
+	border-bottom: 0.2rem solid $primary-bg;
+	transition: border-color $primary-transition;
+
+	&Error {
+		border-bottom-color: $error-color;
+	}
+
+	&::placeholder {
+		color: rgba($form-color, 0.5);
+	}
+
+	&:focus {
+		border-bottom-color: rgba($primary-bg, 0.5);
+	}
+}
+
+.error {
+	position: absolute;
+	padding-top: 0.5rem;
+	color: $error-color;
+	font-weight: 300;
+	font-size: 1.4rem;
+	line-height: 1.4rem;
+}
+
+.button {
+	position: absolute;
+	top: 50%;
+	right: 0.7rem;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	border: 0;
+	transform: translateY(-50%);
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		.icon {
+			color: $primary-btn;
+		}
+	}
+
+	&Disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+}
+
+.icon {
+	color: $form-color;
+	transition: color $primary-transition;
+}

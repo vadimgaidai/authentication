@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 
 import Form from '../../containers/form'
+import Input from '../../containers/input'
 
-import classes from './auth.module.scss'
+import { auth, wrapper, caption, description } from './auth.module.scss'
 
 const Auth = () => {
-	const [state, setState] = useState({
+	// eslint-disable-next-line no-unused-vars
+	const [{ isLoading, isSignUp }, setState] = useState({
 		isLoading: false,
 		isSignUp: false,
 		formData: {
@@ -15,21 +17,34 @@ const Auth = () => {
 		},
 	})
 
-	const { isLoading, isSignUp } = state
 	return (
-		<section className={classes.auth}>
-			<div className={classes.wrapper}>
-				<h1 className={classes.caption}>Caption</h1>
-				<p className={classes.description}>description</p>
+		<section className={auth}>
+			<div className={wrapper}>
+				<h1 className={caption}>
+					{isSignUp ? 'Create your account!' : 'Login in into your account'}
+				</h1>
+				<p className={description}>
+					{isSignUp
+						? 'Complete all the following. Just one step'
+						: 'Welcome back! Please enter you access info'}
+				</p>
 			</div>
-			<div className={classes.wrapper}>
+			<div className={wrapper}>
 				<Form
 					title={isSignUp ? 'Sign Up' : 'Sign In'}
 					buttonValue={isSignUp ? 'Create new account' : 'Login to account'}
 					typeButton="primary"
 					isLoading={isLoading}
 				>
-					<input type="text" />
+					{isSignUp ? (
+						<Input type="text" label="Name" preloader="Enter you name" />
+					) : null}
+					<Input type="email" label="Email" preloader="Enter you email" />
+					<Input
+						type="password"
+						label="Password"
+						preloader="Enter you password"
+					/>
 				</Form>
 			</div>
 		</section>

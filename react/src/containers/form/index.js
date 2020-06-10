@@ -1,12 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classes from './form.module.scss'
 
-const Form = ({ title, children }) => {
+import Button from '../../components/button'
+
+import { form, title } from './form.module.scss'
+
+const onSubmitHandler = (event) => {
+	event.preventDefault()
+}
+
+const Form = ({ title: itleValue, children, typeButton, buttonValue }) => {
 	return (
-		<form className={classes.form}>
-			<h2 className={classes.title}>{title}</h2>
+		<form className={form} onSubmit={onSubmitHandler}>
+			<h2 className={title}>{itleValue}</h2>
 			{children}
+			<Button typeButton={typeButton}>{buttonValue}</Button>
 		</form>
 	)
 }
