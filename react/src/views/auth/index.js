@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import set from 'lodash/set'
 
 import Form from '../../containers/form'
 import Input from '../../containers/input'
+import { onSignIn, onSignUp } from '../../redux/auth/action'
 
 import { auth, wrapper, caption, description } from './auth.module.scss'
 
 const Auth = () => {
-	// eslint-disable-next-line no-unused-vars
-	const [{ isLoading, isSignUp }, setState] = useState({
+	const [{ isLoading, isSignUp, formData }, setState] = useState({
 		isLoading: false,
 		isSignUp: false,
 		formData: {
@@ -16,6 +18,20 @@ const Auth = () => {
 			password: '',
 		},
 	})
+	const dispatch = useDispatch()
+
+	const onInputHandler = ({ type, value }) => {
+		const oldFormData = { ...formData }
+		set(oldFormData, type, value)
+		setState((prevState) => ({
+			...prevState,
+			formData: oldFormData,
+		}))
+	}
+
+	const onSubmitHandler = () => {
+		isSignUp ? dispatch(onSignUp(formData)) : dispatch(onSignIn(formData))
+	}
 
 	return (
 		<section className={auth}>
@@ -35,15 +51,27 @@ const Auth = () => {
 					buttonValue={isSignUp ? 'Create new account' : 'Login to account'}
 					typeButton="primary"
 					isLoading={isLoading}
+					onSubmit={onSubmitHandler}
 				>
 					{isSignUp ? (
-						<Input type="text" label="Name" preloader="Enter you name" />
+						<Input
+							type="text"
+							label="Name"
+							preloader="Enter you name"
+							onInput={(value) => onInputHandler({ type: 'name', value })}
+						/>
 					) : null}
-					<Input type="email" label="Email" preloader="Enter you email" />
+					<Input
+						type="email"
+						label="Email"
+						preloader="Enter you email"
+						onInput={(value) => onInputHandler({ type: 'email', value })}
+					/>
 					<Input
 						type="password"
 						label="Password"
 						preloader="Enter you password"
+						onInput={(value) => onInputHandler({ type: 'password', value })}
 					/>
 				</Form>
 			</div>

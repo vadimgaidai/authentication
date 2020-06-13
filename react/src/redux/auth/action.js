@@ -1,18 +1,28 @@
-import { LOAD_USER } from '../actionTypes'
+import { SET_DATA } from '../actionTypes'
 
-export const getUser = ({ data: user }) => {
+export const setData = (data) => {
 	return {
-		type: LOAD_USER,
-		user,
+		type: SET_DATA,
+		data,
 	}
 }
 
-export const loadUSer = () => {
-	const { $api } = window
+export const onSignIn = ({ email, password }) => {
 	return async (dispatch) => {
 		try {
-			const { data } = await $api.tests.GetUser()
-			dispatch(getUser(data))
+			const { data } = await window.$api.auth.sendSignIn(email, password)
+			dispatch(setData(data))
 		} catch {}
+	}
+}
+
+export const onSignUp = ({ name, email, password }) => {
+	return async (dispatch) => {
+		try {
+			await window.$api.auth.sendSignUp(name, email, password)
+			return false
+		} catch (error) {
+			return error
+		}
 	}
 }

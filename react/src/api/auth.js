@@ -13,7 +13,7 @@ export default ({ request }) => ({
 	},
 	sendSignIn(email, password) {
 		return request({
-			url: `${process.env.VUE_APP_API}signInWithPassword?key=${process.env.REACT_APP_API_KEY}`,
+			url: `${process.env.REACT_APP_API}signInWithPassword?key=${process.env.REACT_APP_API_KEY}`,
 			data: {
 				email,
 				password,
@@ -24,14 +24,14 @@ export default ({ request }) => ({
 	},
 	getUser(idToken) {
 		return request({
-			url: `${process.env.VUE_APP_API}lookup?key=${process.env.REACT_APP_API_KEY}`,
+			url: `${process.env.REACT_APP_API}lookup?key=${process.env.REACT_APP_API_KEY}`,
 			data: { idToken },
 			method: 'POST',
 		})
 	},
 	refreshToken(token) {
 		return request({
-			url: `${process.env.VUE_APP_TOKEN_RESET}/v1/token?key=${process.env.REACT_APP_API_KEY}`,
+			url: `${process.env.REACT_APP_TOKEN_RESET}/v1/token?key=${process.env.REACT_APP_API_KEY}`,
 			data: {
 				grant_type: 'refresh_token',
 				refresh_token: token,

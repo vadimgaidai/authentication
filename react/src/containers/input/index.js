@@ -10,9 +10,16 @@ import {
 	error,
 } from './input.module.scss'
 
-const Input = ({ preloader, type, label: labelValue, value, rules }) => {
+const Input = ({
+	preloader,
+	type,
+	label: labelValue,
+	value,
+	rules,
+	onInput,
+}) => {
 	// eslint-disable-next-line no-unused-vars
-	const [{ error: errorValue }, setstate] = useState({
+	const [{ error: errorValue }, setState] = useState({
 		error: null,
 		isPasswordVisible: false,
 		inputType: null,
@@ -28,6 +35,7 @@ const Input = ({ preloader, type, label: labelValue, value, rules }) => {
 					type={type}
 					placeholder={preloader}
 					defaultValue={value}
+					onInput={({ target }) => onInput(target.value)}
 				/>
 			</div>
 			{errorValue ? <span className={error}> {errorValue}</span> : null}
@@ -41,6 +49,7 @@ Input.propTypes = {
 	label: PropTypes.string.isRequired,
 	value: PropTypes.string,
 	rules: PropTypes.array,
+	onInput: PropTypes.func,
 }
 
 Input.defaultProps = {

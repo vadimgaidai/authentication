@@ -9,9 +9,18 @@ const onSubmitHandler = (event) => {
 	event.preventDefault()
 }
 
-const Form = ({ title: itleValue, children, typeButton, buttonValue }) => {
+const Form = ({
+	title: itleValue,
+	children,
+	typeButton,
+	buttonValue,
+	onSubmit,
+}) => {
 	return (
-		<form className={form} onSubmit={onSubmitHandler}>
+		<form
+			className={form}
+			onSubmit={(event) => onSubmitHandler(event, onSubmit())}
+		>
 			<h2 className={title}>{itleValue}</h2>
 			{children}
 			<Button typeButton={typeButton}>{buttonValue}</Button>
@@ -26,6 +35,7 @@ Form.propTypes = {
 	isDisabledButton: PropTypes.bool,
 	isLoading: PropTypes.bool,
 	children: PropTypes.node.isRequired,
+	onSubmit: PropTypes.func,
 }
 
 export default Form
