@@ -21,3 +21,7 @@
 .button {
 	min-height: 4rem;
 }
+
+@include media('mobile') {
+	@import './form-mobile.module.scss';
+}

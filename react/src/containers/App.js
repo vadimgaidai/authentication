@@ -14,9 +14,10 @@ const App = ({ hideLoader }) => {
 		<ScrollToTop>
 			<Switch>
 				<Route exact path="/">
-					{isAuth ? <Index /> : <Redirect to="/auth" />}
+					{isAuth ? <Index /> : <Redirect to="/signin" />}
 				</Route>
-				<Route path="/auth" component={Auth} />
+				<Route path="/signin" component={Auth} />
+				<Route path="/signup" component={Auth} />
 			</Switch>
 		</ScrollToTop>
 	)

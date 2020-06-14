@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 import set from 'lodash/set'
 
 import Form from '../../containers/form'
 import Input from '../../containers/input'
 import { onSignIn, onSignUp } from '../../redux/auth/action'
 
-import { auth, wrapper, caption, description } from './auth.module.scss'
+import {
+	auth,
+	wrapper,
+	caption,
+	description,
+	route,
+	routeLink,
+} from './auth.module.scss'
 
-const Auth = () => {
+const Auth = ({ match: { url } }) => {
 	const [{ isLoading, isSignUp, formData }, setState] = useState({
 		isLoading: false,
 		isSignUp: false,
@@ -18,14 +27,20 @@ const Auth = () => {
 			password: '',
 		},
 	})
+
 	const dispatch = useDispatch()
 
-	const onInputHandler = ({ type, value }) => {
-		const oldFormData = { ...formData }
-		set(oldFormData, type, value)
+	useEffect(() => {
 		setState((prevState) => ({
 			...prevState,
-			formData: oldFormData,
+			isSignUp: url.split('/')[1] === 'signup',
+		}))
+	}, [url])
+
+	const onInputHandler = ({ type, value }) => {
+		setState((prevState) => ({
+			...prevState,
+			formData: set({ ...formData }, type, value),
 		}))
 	}
 
@@ -74,9 +89,19 @@ const Auth = () => {
 						onInput={(value) => onInputHandler({ type: 'password', value })}
 					/>
 				</Form>
+				<p className={route}>
+					{isSignUp ? 'Dont have an account?' : 'Already have an account?'}
+					<NavLink to={isSignUp ? 'signin' : 'signup'} className={routeLink}>
+						{isSignUp ? 'Sign In' : 'Sign Up'}
+					</NavLink>
+				</p>
 			</div>
 		</section>
 	)
+}
+
+Auth.propTypes = {
+	match: PropTypes.object,
 }
 
 export default Auth
