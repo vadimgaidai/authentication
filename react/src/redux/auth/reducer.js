@@ -1,11 +1,17 @@
-import { SET_AUTH, SET_DATA } from '../actionTypes'
+import cloneDeep from 'lodash/cloneDeep'
+import { SET_DATA, SET_USER, SET_AUTH, RESET_STATE } from '../actionTypes'
 
 const initialState = {
 	isAuth: false,
 	user: null,
 }
 
-export const authReducer = (state = initialState, { type, isAuth, data }) => {
+const duplicateState = cloneDeep(initialState)
+
+export const authReducer = (
+	state = initialState,
+	{ type, isAuth, data, user }
+) => {
 	switch (type) {
 		case SET_AUTH: {
 			return {
@@ -35,6 +41,17 @@ export const authReducer = (state = initialState, { type, isAuth, data }) => {
 					email,
 					localId,
 				},
+			}
+		}
+		case SET_USER: {
+			return {
+				...state,
+				user,
+			}
+		}
+		case RESET_STATE: {
+			return {
+				state: { ...duplicateState },
 			}
 		}
 		default:

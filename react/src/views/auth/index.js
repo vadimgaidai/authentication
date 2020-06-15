@@ -27,7 +27,6 @@ const Auth = ({ match: { url } }) => {
 			password: '',
 		},
 	})
-
 	const dispatch = useDispatch()
 
 	useEffect(() => {

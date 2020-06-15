@@ -1,4 +1,78 @@
-import { SET_DATA } from '../actionTypes'
+import { SET_DATA, SET_USER, SET_AUTH, RESET_STATE } from '../actionTypes'
+
+export const setAuthentication = (isAuth) => {
+	return {
+		type: SET_AUTH,
+		isAuth,
+	}
+}
+
+export const resetLocalStorage = () => {
+	localStorage.clear()
+}
+
+export const resetState = () => {
+	return {
+		type: RESET_STATE,
+	}
+}
+
+export const setUser = (user) => {
+	return {
+		type: SET_USER,
+		user,
+	}
+}
+
+export const loadUser = () => {
+	return async (dispatch) => {
+		try {
+			const {
+				data: { users },
+			} = await window.$api.auth.getUser(localStorage.getItem('access_token'))
+			const { displayName: name, email, localId } = users.find((user) => user)
+			dispatch(setUser({ name, email, localId }))
+			dispatch(setAuthentication(true))
+		} catch ({ status }) {
+			// dispatch('notificationServerError', status, { root: true })
+		}
+	}
+}
+
+export const updateTokens = () => {
+	return async (dispatch) => {
+		try {
+			const {
+				data: {
+					access_token: accessToken,
+					refresh_token: refreshToken,
+					expires_in: expiresIn,
+				},
+			} = await window.$api.auth.refreshToken(
+				localStorage.getItem('refresh_token')
+			)
+
+			localStorage.setItem('access_token', accessToken)
+			localStorage.setItem('refresh_token', refreshToken)
+			localStorage.setItem('expires_in', Date.now() / 1000 + expiresIn)
+			await dispatch(loadUser())
+		} catch {
+			dispatch(resetLocalStorage())
+			dispatch(resetState())
+		}
+	}
+}
+
+export const initial = () => {
+	return async (dispatch) => {
+		try {
+			if (!localStorage.getItem('refresh_token')) {
+				return
+			}
+			await dispatch(updateTokens())
+		} catch {}
+	}
+}
 
 export const setData = (data) => {
 	return {
