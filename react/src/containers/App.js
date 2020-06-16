@@ -10,6 +10,7 @@ import Index from '../views/index'
 const App = ({ hideLoader }) => {
 	useEffect(hideLoader, [])
 	const { isAuth = false } = useSelector(({ authReducer }) => authReducer)
+
 	return (
 		<ScrollToTop>
 			<Switch>

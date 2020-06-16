@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import set from 'lodash/set'
 
 import Form from '../../containers/form'
@@ -17,7 +17,7 @@ import {
 	routeLink,
 } from './auth.module.scss'
 
-const Auth = ({ match: { url } }) => {
+const Auth = () => {
 	const [{ isLoading, isSignUp, formData }, setState] = useState({
 		isLoading: false,
 		isSignUp: false,
@@ -28,13 +28,22 @@ const Auth = ({ match: { url } }) => {
 		},
 	})
 	const dispatch = useDispatch()
+	const history = useHistory()
+	const { pathname } = useLocation()
 
 	useEffect(() => {
 		setState((prevState) => ({
 			...prevState,
-			isSignUp: url.split('/')[1] === 'signup',
+			isSignUp: pathname.split('/')[1] === 'signup',
 		}))
-	}, [url])
+	}, [pathname])
+
+	const setLoading = (isLoadingPayload) => {
+		setState((prevState) => ({
+			...prevState,
+			isLoading: isLoadingPayload,
+		}))
+	}
 
 	const onInputHandler = ({ type, value }) => {
 		setState((prevState) => ({
@@ -43,8 +52,26 @@ const Auth = ({ match: { url } }) => {
 		}))
 	}
 
+	const onSignUpHandler = async () => {
+		setLoading(true)
+		const error = await dispatch(onSignUp(formData))
+		if (!error) {
+			// history.push('/')
+		}
+		setLoading(false)
+	}
+
+	const onSignInHandler = async () => {
+		setLoading(true)
+		const error = await dispatch(onSignIn(formData))
+		if (!error) {
+			history.push('/')
+		}
+		setLoading(false)
+	}
+
 	const onSubmitHandler = () => {
-		isSignUp ? dispatch(onSignUp(formData)) : dispatch(onSignIn(formData))
+		isSignUp ? onSignUpHandler() : onSignInHandler()
 	}
 
 	return (
