@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import Eye from '../../icons/Eye'
+import EyeHide from '../../icons/EyeHide'
+
 import {
 	label,
 	text,
@@ -8,6 +11,9 @@ import {
 	input,
 	inputError,
 	error,
+	button,
+	buttonDisabled,
+	icon,
 } from './input.module.scss'
 
 const Input = ({
@@ -18,13 +24,24 @@ const Input = ({
 	rules,
 	onInput,
 }) => {
-	// eslint-disable-next-line no-unused-vars
-	const [{ error: errorValue }, setState] = useState({
+	const [
+		{ error: errorValue, isPasswordVisible, inputType },
+		setState,
+	] = useState({
 		error: null,
 		isPasswordVisible: false,
 		inputType: null,
 		isReset: false,
 	})
+
+	const setVisiblePassword = (event) => {
+		event.preventDefault()
+		setState((prevState) => ({
+			...prevState,
+			isPasswordVisible: !isPasswordVisible,
+			inputType: isPasswordVisible ? 'password' : 'text',
+		}))
+	}
 
 	return (
 		<label className={label}>
@@ -32,11 +49,24 @@ const Input = ({
 			<div className={contaier}>
 				<input
 					className={[input, errorValue ? inputError : null].join(' ')}
-					type={type}
+					type={inputType || type}
 					placeholder={preloader}
 					defaultValue={value}
 					onInput={({ target }) => onInput(target.value)}
 				/>
+				{type === 'password' ? (
+					<button
+						className={[button, !value ? buttonDisabled : null].join(' ')}
+						disabled={!value}
+						onClick={setVisiblePassword}
+					>
+						{isPasswordVisible ? (
+							<EyeHide className={icon} />
+						) : (
+							<Eye className={icon} />
+						)}
+					</button>
+				) : null}
 			</div>
 			{errorValue ? <span className={error}> {errorValue}</span> : null}
 		</label>

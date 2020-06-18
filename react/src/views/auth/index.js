@@ -98,6 +98,7 @@ const Auth = () => {
 						<Input
 							type="text"
 							label="Name"
+							value={formData.name}
 							preloader="Enter you name"
 							onInput={(value) => onInputHandler({ type: 'name', value })}
 						/>
@@ -105,12 +106,14 @@ const Auth = () => {
 					<Input
 						type="email"
 						label="Email"
+						value={formData.email}
 						preloader="Enter you email"
 						onInput={(value) => onInputHandler({ type: 'email', value })}
 					/>
 					<Input
 						type="password"
 						label="Password"
+						value={formData.password}
 						preloader="Enter you password"
 						onInput={(value) => onInputHandler({ type: 'password', value })}
 					/>
