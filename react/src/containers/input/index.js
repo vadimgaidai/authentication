@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import FormContext from '../../context/formContext'
@@ -43,8 +42,6 @@ const Input = ({
 	useEffect(() => setDidMount(true), [])
 
 	const context = useContext(FormContext)
-
-	const { pathname } = useLocation()
 
 	const checkIsValid = (isError) => {
 		return rules.some((func) => {

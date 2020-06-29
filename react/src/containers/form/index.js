@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
-import set from 'lodash/set'
 import Button from '../../components/button'
 
 import { FormProvider } from '../../context/formContext'
@@ -21,8 +20,7 @@ const Form = ({
 	useHistory().listen(() => setValidations({}))
 
 	const checkValidInput = (isValidInput, type) => {
-		// setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))
-		setValidations(set(validations, type, isValidInput))
+		setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))
 	}
 
 	useEffect(() => {

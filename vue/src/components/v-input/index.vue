@@ -73,8 +73,6 @@ export default {
 	},
 	watch: {
 		value() {
-			console.log(this.value)
-
 			this.setValidation(!this.isReset)
 		},
 		'$route.path': {
