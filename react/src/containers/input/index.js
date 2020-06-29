@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useContext, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
+import FormContext from '../../context/formContext'
 
 import Eye from '../../icons/Eye'
 import EyeHide from '../../icons/EyeHide'
@@ -25,7 +29,7 @@ const Input = ({
 	onInput,
 }) => {
 	const [
-		{ error: errorValue, isPasswordVisible, inputType },
+		{ error: errorValue, isPasswordVisible, inputType, isReset },
 		setState,
 	] = useState({
 		error: null,
@@ -33,6 +37,41 @@ const Input = ({
 		inputType: null,
 		isReset: false,
 	})
+
+	const [isDidMount, setDidMount] = useState(false)
+
+	useEffect(() => setDidMount(true), [])
+
+	const context = useContext(FormContext)
+
+	const { pathname } = useLocation()
+
+	const checkIsValid = (isError) => {
+		return rules.some((func) => {
+			const message = func(value)
+			if (isError) {
+				setState((prevState) => ({
+					...prevState,
+					error: message,
+				}))
+			}
+			return message
+		})
+	}
+
+	const setValidation = (isError) => {
+		context(!checkIsValid(isError), type)
+	}
+
+	useEffect(() => {
+		setValidation(false)
+	}, [type])
+
+	useEffect(() => {
+		if (isDidMount) {
+			setValidation(!isReset)
+		}
+	}, [value])
 
 	const setVisiblePassword = (event) => {
 		event.preventDefault()
@@ -52,7 +91,8 @@ const Input = ({
 					type={inputType || type}
 					placeholder={preloader}
 					defaultValue={value}
-					onInput={({ target }) => onInput(target.value)}
+					onInput={({ target: { value: inputValue } }) => onInput(inputValue)}
+					onBlur={() => setValidation(true)}
 				/>
 				{type === 'password' ? (
 					<button

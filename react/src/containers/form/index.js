@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-
+import { useHistory } from 'react-router-dom'
+import set from 'lodash/set'
 import Button from '../../components/button'
 
-import { form, title } from './form.module.scss'
+import { FormProvider } from '../../context/formContext'
 
-const onSubmitHandler = (event) => {
-	event.preventDefault()
-}
+import { form, title } from './form.module.scss'
 
 const Form = ({
 	title: itleValue,
@@ -16,14 +15,39 @@ const Form = ({
 	buttonValue,
 	onSubmit,
 }) => {
+	const [validations, setValidations] = useState({})
+	const [isValid, setIsValid] = useState(false)
+
+	useHistory().listen(() => setValidations({}))
+
+	const checkValidInput = (isValidInput, type) => {
+		// setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))
+		setValidations(set(validations, type, isValidInput))
+	}
+
+	useEffect(() => {
+		setIsValid(Object.values(validations).every((valid) => valid))
+	}, [validations])
+
+	const onSubmitHandler = () => {
+		if (isValid) {
+			console.log('valid')
+		}
+	}
+
 	return (
 		<form
 			className={form}
-			onSubmit={(event) => onSubmitHandler(event, onSubmit())}
+			onSubmit={(event) => {
+				event.preventDefault()
+				onSubmitHandler()
+			}}
 		>
-			<h2 className={title}>{itleValue}</h2>
-			{children}
-			<Button typeButton={typeButton}>{buttonValue}</Button>
+			<FormProvider value={checkValidInput}>
+				<h2 className={title}>{itleValue}</h2>
+				{children}
+				<Button typeButton={typeButton}>{buttonValue}</Button>
+			</FormProvider>
 		</form>
 	)
 }

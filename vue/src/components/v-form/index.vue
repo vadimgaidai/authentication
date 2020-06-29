@@ -64,7 +64,7 @@ export default {
 		checkValidInput(isValid, type) {
 			this.$set(this.validations, type, isValid)
 			this.$nextTick(() => {
-				this.isValid = !Object.values(this.validations).some(valid => !valid)
+				this.isValid = Object.values(this.validations).every(valid => valid)
 			})
 		},
 		eventHandler() {
