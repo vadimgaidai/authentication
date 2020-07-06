@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import Button from '../../components/button'
+import ThreeDots from '../../icons/ThreeDots'
 
 import { FormProvider } from '../../context/formContext'
 
-import { form, title } from './form.module.scss'
+import { form, title, icon } from './form.module.scss'
 
 const Form = ({
 	title: itleValue,
@@ -13,6 +14,7 @@ const Form = ({
 	typeButton,
 	buttonValue,
 	onSubmit,
+	isLoading,
 }) => {
 	const [validations, setValidations] = useState({})
 	const [isValid, setIsValid] = useState(false)
@@ -44,7 +46,13 @@ const Form = ({
 			<FormProvider value={checkValidInput}>
 				<h2 className={title}>{itleValue}</h2>
 				{children}
-				<Button typeButton={typeButton}>{buttonValue}</Button>
+				<Button typeButton={typeButton}>
+					{isLoading ? (
+						<ThreeDots className={icon} />
+					) : (
+						<span>{buttonValue}</span>
+					)}
+				</Button>
 			</FormProvider>
 		</form>
 	)

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 
 import Form from '../../containers/form'
 import Input from '../../containers/input'
-import { onSignIn, onSignUp } from '../../redux/auth/action'
+import { onSignIn, onSignUp, setIsSignUp } from '../../redux/auth/action'
 
 import { required, length, name, email, password } from '../../utils/validation'
 
@@ -19,9 +19,10 @@ import {
 } from './auth.module.scss'
 
 const Auth = () => {
-	const [{ isLoading, isSignUp, formData, formRules }, setState] = useState({
+	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
+
+	const [{ isLoading, formData, formRules }, setState] = useState({
 		isLoading: false,
-		isSignUp: false,
 		formData: {
 			name: '',
 			email: '',
@@ -41,10 +42,8 @@ const Auth = () => {
 	useEffect(() => setDidMount(true), [])
 
 	useEffect(() => {
-		setState((prevState) => ({
-			...prevState,
-			isSignUp: pathname.split('/')[1] === 'signup',
-		}))
+		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname])
 
 	const setLoading = (isLoadingPayload) => {
@@ -84,35 +83,18 @@ const Auth = () => {
 	}
 
 	const formContent = () => {
-		return isSignUp ? (
+		return (
 			<>
-				<Input
-					type="text"
-					label="Name"
-					value={formData.name}
-					rules={formRules.name}
-					preloader="Enter you name"
-					onInput={(value) => onInputHandler({ type: 'name', value })}
-				/>
-				<Input
-					type="email"
-					label="Email"
-					value={formData.email}
-					rules={formRules.email}
-					preloader="Enter you email"
-					onInput={(value) => onInputHandler({ type: 'email', value })}
-				/>
-				<Input
-					type="password"
-					label="Password"
-					value={formData.password}
-					rules={formRules.password}
-					preloader="Enter you password"
-					onInput={(value) => onInputHandler({ type: 'password', value })}
-				/>
-			</>
-		) : (
-			<>
+				{isSignUp ? (
+					<Input
+						type="text"
+						label="Name"
+						value={formData.name}
+						rules={formRules.name}
+						preloader="Enter you name"
+						onInput={(value) => onInputHandler({ type: 'name', value })}
+					/>
+				) : null}
 				<Input
 					type="email"
 					label="Email"

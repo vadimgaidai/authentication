@@ -1,4 +1,10 @@
-import { SET_DATA, SET_USER, SET_AUTH, RESET_STATE } from '../actionTypes'
+import {
+	SET_DATA,
+	SET_USER,
+	SET_AUTH,
+	RESET_STATE,
+	SET_SIGN_UP,
+} from '../actionTypes'
 
 export const setAuthentication = (isAuth) => {
 	return {
@@ -14,6 +20,13 @@ export const resetLocalStorage = () => {
 export const resetState = () => {
 	return {
 		type: RESET_STATE,
+	}
+}
+
+export const setIsSignUp = (isSignUp) => {
+	return {
+		type: SET_SIGN_UP,
+		isSignUp,
 	}
 }
 

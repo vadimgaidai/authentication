@@ -2,7 +2,7 @@ import * as React from 'react'
 
 function SvgThreeDots(props) {
 	return (
-		<svg width={120} height={30} fill="#fff" {...props}>
+		<svg viewBox="0 0 120 30" fill="#fff" {...props}>
 			<circle cx={15} cy={15} r={15}>
 				<animate
 					attributeName="r"

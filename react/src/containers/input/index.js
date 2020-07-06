@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
 import FormContext from '../../context/formContext'
 
@@ -27,6 +28,8 @@ const Input = ({
 	rules,
 	onInput,
 }) => {
+	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
+
 	const [
 		{ error: errorValue, isPasswordVisible, inputType, isReset },
 		setState,
@@ -62,7 +65,7 @@ const Input = ({
 
 	useEffect(() => {
 		setValidation(false)
-	}, [type])
+	}, [isSignUp])
 
 	useEffect(() => {
 		if (isDidMount) {
