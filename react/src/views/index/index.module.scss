@@ -1,0 +1,41 @@
+.main {
+	display: grid;
+	align-content: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	padding: 1.5rem;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.image {
+	margin: 0 auto 4rem;
+	animation: image infinite 5s linear;
+	@keyframes image {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+}
+
+.title {
+	font-weight: bold;
+	font-size: 5rem;
+	text-align: center;
+
+	@include media('mobile') {
+		font-size: 3rem;
+	}
+}
+
+.description {
+	font-size: 2.3rem;
+	text-align: center;
+	@include media('mobile') {
+		font-size: 1.5rem;
+	}
+}

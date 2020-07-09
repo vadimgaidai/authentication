@@ -64,7 +64,7 @@ const Auth = () => {
 		setLoading(true)
 		const error = await dispatch(onSignUp(formData))
 		if (!error) {
-			// history.push('/')
+			//
 		}
 		setLoading(false)
 	}
@@ -78,7 +78,7 @@ const Auth = () => {
 		setLoading(false)
 	}
 
-	const onSubmitHandler = () => {
+	const onSubmit = () => {
 		isSignUp ? onSignUpHandler() : onSignInHandler()
 	}
 
@@ -133,7 +133,7 @@ const Auth = () => {
 					buttonValue={isSignUp ? 'Create new account' : 'Login to account'}
 					typeButton="primary"
 					isLoading={isLoading}
-					onSubmit={onSubmitHandler}
+					onSubmit={onSubmit}
 				>
 					{isDidMount ? formContent() : <></>}
 				</Form>

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from './redux/rootReducer'
 import { initial } from './redux/auth/action'
+import eventBus from './utils/eventBus'
 
 import App from './containers/App'
 
@@ -39,6 +40,8 @@ const composeEnhancers =
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 api({ request, store })
+
+window.$bus = eventBus
 
 store.dispatch(initial()).then(() => {
 	ReactDOM.render(

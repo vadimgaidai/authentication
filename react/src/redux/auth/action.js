@@ -104,12 +104,20 @@ export const onSignIn = ({ email, password }) => {
 }
 
 export const onSignUp = ({ name, email, password }) => {
-	return async (dispatch) => {
+	return async () => {
 		try {
 			await window.$api.auth.sendSignUp(name, email, password)
 			return false
 		} catch (error) {
 			return error
 		}
+	}
+}
+
+export const logoutHandler = () => {
+	return (dispatch) => {
+		dispatch(setAuthentication(false))
+		dispatch(resetLocalStorage())
+		dispatch(resetState())
 	}
 }

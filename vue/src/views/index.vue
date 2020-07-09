@@ -3,7 +3,7 @@
 		<icon :class="$style.image" name="vuejs" width="150" height="150" />
 		<h1 v-if="userName" :class="$style.title">Hello, {{ userName }}!</h1>
 		<p :class="$style.description">Welcome to Your Vue.js App</p>
-		<VButton :class="$style.button" @click="onLogoutClickHandler">
+		<VButton :class="$style.button" @click="onLogout">
 			<template #button>
 				<span> Logout </span>
 			</template>
@@ -27,7 +27,7 @@ export default {
 	},
 	methods: {
 		...mapActions('auth', ['logoutHandler']),
-		onLogoutClickHandler() {
+		onLogout() {
 			this.logoutHandler()
 			this.$router.push('/signin')
 		},

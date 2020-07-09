@@ -30,8 +30,9 @@ const Form = ({
 	}, [validations])
 
 	const onSubmitHandler = () => {
+		window.$bus.emit('check-valid', true)
 		if (isValid) {
-			console.log('valid')
+			onSubmit()
 		}
 	}
 

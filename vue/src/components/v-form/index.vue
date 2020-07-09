@@ -1,5 +1,5 @@
 <template>
-	<form :class="$style.form" @submit.prevent="eventHandler">
+	<form :class="$style.form" @submit.prevent="onSubmit">
 		<h2 :class="$style.title">{{ title }}</h2>
 		<slot name="form-content" />
 		<VButton
@@ -67,7 +67,7 @@ export default {
 				this.isValid = Object.values(this.validations).every(valid => valid)
 			})
 		},
-		eventHandler() {
+		onSubmit() {
 			this.$bus.$emit('check-valid')
 			if (this.isValid) {
 				this.$emit('submit')

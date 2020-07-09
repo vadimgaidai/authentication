@@ -28,6 +28,7 @@ const Input = ({
 	rules,
 	onInput,
 }) => {
+	const { $bus } = window
 	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
 
 	const [
@@ -58,6 +59,15 @@ const Input = ({
 			return message
 		})
 	}
+
+	useEffect(() => {
+		setDidMount(true)
+		$bus.on('check-valid', (event) => {
+			if (event) {
+				checkIsValid(true)
+			}
+		})
+	}, [])
 
 	const setValidation = (isError) => {
 		context(!checkIsValid(isError), type)
