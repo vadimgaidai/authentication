@@ -50,7 +50,6 @@ export const updateTokens = () => async (dispatch) => {
 			localStorage.getItem('refresh_token')
 		)
 
-		console.log(accessToken)
 		localStorage.setItem('access_token', accessToken)
 		localStorage.setItem('refresh_token', refreshToken)
 		localStorage.setItem('expires_in', Date.now() / 1000 + expiresIn)

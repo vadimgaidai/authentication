@@ -21,8 +21,7 @@ import {
 const Auth = () => {
 	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
 
-	const [{ isLoading, formData, formRules }, setState] = useState({
-		isLoading: false,
+	const [{ formData, formRules }, setState] = useState({
 		formData: {
 			name: '',
 			email: '',
@@ -34,6 +33,8 @@ const Auth = () => {
 			password: [required(), length(8, 64), password()],
 		},
 	})
+	const [isLoading, setLoading] = useState(false)
+
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const { pathname } = useLocation()
@@ -46,13 +47,6 @@ const Auth = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname])
 
-	const setLoading = (isLoadingPayload) => {
-		setState((prevState) => ({
-			...prevState,
-			isLoading: isLoadingPayload,
-		}))
-	}
-
 	const onInputHandler = ({ type, value }) => {
 		setState((prevState) => ({
 			...prevState,
@@ -60,26 +54,15 @@ const Auth = () => {
 		}))
 	}
 
-	const onSignUpHandler = async () => {
+	const onSubmit = async () => {
 		setLoading(true)
-		const error = await dispatch(onSignUp(formData))
-		if (!error) {
-			//
-		}
+		const error = await dispatch(
+			isSignUp ? onSignUp(formData) : onSignIn(formData)
+		)
 		setLoading(false)
-	}
-
-	const onSignInHandler = async () => {
-		setLoading(true)
-		const error = await dispatch(onSignIn(formData))
 		if (!error) {
-			history.push('/')
+			isSignUp ? console.log(123) : history.push('/')
 		}
-		setLoading(false)
-	}
-
-	const onSubmit = () => {
-		isSignUp ? onSignUpHandler() : onSignInHandler()
 	}
 
 	const formContent = () => {
