@@ -44,8 +44,7 @@ const Auth = () => {
 
 	useEffect(() => {
 		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname])
+	}, [dispatch, pathname])
 
 	const onInputHandler = ({ type, value }) => {
 		setState((prevState) => ({

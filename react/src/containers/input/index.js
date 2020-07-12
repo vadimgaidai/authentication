@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
@@ -28,9 +29,8 @@ const Input = ({
 	rules,
 	onInput,
 }) => {
-	const { $bus } = window
 	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
-
+	const { $bus } = window
 	const [
 		{ error: errorValue, isPasswordVisible, inputType, isReset },
 		setState,
@@ -60,15 +60,6 @@ const Input = ({
 		})
 	}
 
-	useEffect(() => {
-		setDidMount(true)
-		$bus.on('check-valid', (event) => {
-			if (event) {
-				checkIsValid(true)
-			}
-		})
-	}, [])
-
 	const setValidation = (isError) => {
 		context(!checkIsValid(isError), type)
 	}
@@ -81,6 +72,10 @@ const Input = ({
 		if (isDidMount) {
 			setValidation(!isReset)
 		}
+		$bus.on('check-valid', (event) => {
+			setValidation(event)
+		})
+		return () => $bus.remove('check-valid')
 	}, [value])
 
 	const setVisiblePassword = (event) => {

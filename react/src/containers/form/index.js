@@ -19,7 +19,9 @@ const Form = ({
 	const [validations, setValidations] = useState({})
 	const [isValid, setIsValid] = useState(false)
 
-	useHistory().listen(() => setValidations({}))
+	useHistory().listen(() => {
+		setValidations({})
+	})
 
 	const checkValidInput = (isValidInput, type) => {
 		setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))

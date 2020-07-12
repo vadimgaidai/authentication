@@ -2,13 +2,19 @@ const eventBus = {
 	events: {},
 	emit(event, data) {
 		if (!this.events[event]) return
-		this.events[event].forEach((callback) => callback(data))
+		for (const callback of this.events[event]) {
+			callback(data)
+		}
+		console.log(this.events)
 	},
 	on(event, callback) {
 		if (!this.events[event]) {
 			this.events[event] = []
 		}
 		this.events[event].push(callback)
+	},
+	remove(event) {
+		delete this.events[event]
 	},
 }
 
