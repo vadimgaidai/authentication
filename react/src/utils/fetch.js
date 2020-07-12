@@ -1,4 +1,6 @@
 import merge from 'lodash/merge'
+import store from '../redux/store'
+import { updateTokens } from '../redux/auth/action'
 
 const optionsDefault = {
 	'Content-Type': 'application/json',
@@ -9,7 +11,7 @@ const JWT = async () => {
 	const accessToken = localStorage.getItem('access_token')
 	const isExpired = !expiredIn || expiredIn < Date.now() / 1000
 	if (isExpired) {
-		// await updateTokens
+		await store.dispatch(updateTokens())
 		return localStorage.getItem('access_token')
 	}
 	return accessToken

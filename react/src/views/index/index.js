@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Logo from '../../icons/Logo'
 import Button from '../../components/button'
-import { logoutHandler } from '../../redux/auth/action'
+import { onLogout } from '../../redux/auth/action'
 import { main, image, title, description } from './index.module.scss'
 
 const Index = () => {
@@ -13,8 +13,8 @@ const Index = () => {
 	const dispatch = useDispatch()
 	const history = useHistory()
 
-	const onLogout = () => {
-		dispatch(logoutHandler())
+	const onLogoutHandler = async () => {
+		await dispatch(onLogout())
 		history.push('/signin')
 	}
 
@@ -23,7 +23,7 @@ const Index = () => {
 			<Logo className={image} />
 			<h1 className={title}>Hello, {name ?? null}!</h1>
 			<p className={description}>Welcome to Your React.js App</p>
-			<Button onClick={onLogout}>
+			<Button onClick={onLogoutHandler}>
 				<span> Logout </span>
 			</Button>
 		</main>
