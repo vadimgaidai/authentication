@@ -6,6 +6,8 @@ import {
 	SET_SIGN_UP,
 } from '../actionTypes'
 
+import { notification, notificationServerError } from '../notification/action'
+
 export const setAuthentication = (isAuth) => ({
 	type: SET_AUTH,
 	isAuth,
@@ -34,7 +36,7 @@ export const loadUser = () => async (dispatch) => {
 		dispatch(setUser({ name, email, localId }))
 		dispatch(setAuthentication(true))
 	} catch ({ status }) {
-		// dispatch('notificationServerError', status, { root: true })
+		dispatch(notificationServerError(status))
 	}
 }
 
@@ -79,8 +81,19 @@ export const onSignIn = ({ email, password }) => async (dispatch) => {
 		const { data } = await window.$api.auth.sendSignIn(email, password)
 		dispatch(setData(data))
 		return false
-	} catch (error) {
-		return error
+	} catch ({ status }) {
+		if (status === 400) {
+			dispatch(
+				notification({
+					type: 'danger',
+					title: 'Invalid email or password',
+					text: 'Please check the correctness of the entered data',
+				})
+			)
+		} else {
+			dispatch(notificationServerError(status))
+		}
+		return true
 	}
 }
 

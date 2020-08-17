@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import ReactNotification from 'react-notifications-component'
 import store from './redux/store'
 import { initial } from './redux/auth/action'
 import eventBus from './utils/eventBus'
@@ -14,6 +15,7 @@ import { request } from './utils/fetch'
 import * as serviceWorker from './serviceWorker'
 
 import './assets/style/index.scss'
+import 'react-notifications-component/dist/theme.css'
 
 const loader = document.querySelector('.preloader')
 const entry = document.getElementById('root')
@@ -33,6 +35,7 @@ store.dispatch(initial()).then(() => {
 					hideLoader={() => loader.classList.add('preloader--hide')}
 					showLoader={() => loader.classList.remove('preloader--hide')}
 				/>
+				<ReactNotification />
 			</BrowserRouter>
 		</Provider>,
 		entry

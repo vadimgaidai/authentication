@@ -43,7 +43,7 @@ const Auth = () => {
 	useEffect(() => setDidMount(true), [])
 
 	useEffect(() => {
-		// dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
+		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
 	}, [dispatch, pathname])
 
 	const onInputHandler = ({ type, value }) => {
