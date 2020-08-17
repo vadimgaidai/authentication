@@ -1,6 +1,11 @@
-/* eslint-disable no-tabs */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react'
+import React, {
+	useState,
+	useContext,
+	useEffect,
+	useCallback,
+	useRef,
+} from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
@@ -29,40 +34,49 @@ const Input = ({
 	rules,
 	onInput,
 }) => {
-	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
 	const { $bus } = window
+	const { isSignUp = false } = useSelector(({ authReducer }) => authReducer)
+
 	const [
-		{ error: errorValue, isPasswordVisible, inputType, isReset },
+		{ error: errorValue, isPasswordVisible, inputType },
 		setState,
 	] = useState({
 		error: null,
 		isPasswordVisible: false,
 		inputType: null,
-		isReset: false,
 	})
 
+	const inputRef = useRef(null)
+
+	const [isReset, setReset] = useState(false)
 	const [isDidMount, setDidMount] = useState(false)
 
 	useEffect(() => setDidMount(true), [])
 
 	const context = useContext(FormContext)
 
-	const checkIsValid = (isError) => {
-		return rules.some((func) => {
-			const message = func(value)
-			if (isError) {
-				setState((prevState) => ({
-					...prevState,
-					error: message,
-				}))
-			}
-			return message
-		})
-	}
+	const checkIsValid = useCallback(
+		(isError) => {
+			return rules.some((func) => {
+				const message = func(value)
+				if (isError && !isReset) {
+					setState((prevState) => ({
+						...prevState,
+						error: message,
+					}))
+				}
+				return message
+			})
+		},
+		[rules, value]
+	)
 
-	const setValidation = (isError) => {
-		context(!checkIsValid(isError), type)
-	}
+	const setValidation = useCallback(
+		(isError) => {
+			context(!checkIsValid(isError), type)
+		},
+		[checkIsValid, context, type]
+	)
 
 	useEffect(() => {
 		setValidation(false)
@@ -74,6 +88,12 @@ const Input = ({
 		}
 		$bus.on('check-valid', (event) => {
 			setValidation(event)
+		})
+		$bus.on('reset-data', (event) => {
+			setReset(event)
+			onInput('')
+			inputRef.current.value = ''
+			setReset(false)
 		})
 		return () => $bus.remove('check-valid')
 	}, [value])
@@ -98,10 +118,11 @@ const Input = ({
 					defaultValue={value}
 					onInput={({ target: { value: inputValue } }) => onInput(inputValue)}
 					onBlur={() => setValidation(true)}
+					ref={inputRef}
 				/>
-				{type === 'password' ? (
+				{type === 'password' && (
 					<button
-						className={[button, !value ? buttonDisabled : null].join(' ')}
+						className={[button, !value && buttonDisabled].join(' ')}
 						disabled={!value}
 						onClick={setVisiblePassword}
 					>
@@ -111,9 +132,9 @@ const Input = ({
 							<Eye className={icon} />
 						)}
 					</button>
-				) : null}
+				)}
 			</div>
-			{errorValue ? <span className={error}> {errorValue}</span> : null}
+			{errorValue && <span className={error}> {errorValue}</span>}
 		</label>
 	)
 }

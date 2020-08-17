@@ -78,7 +78,10 @@ export const onSignIn = ({ email, password }) => async (dispatch) => {
 	try {
 		const { data } = await window.$api.auth.sendSignIn(email, password)
 		dispatch(setData(data))
-	} catch {}
+		return false
+	} catch (error) {
+		return error
+	}
 }
 
 export const onSignUp = ({ name, email, password }) => async () => {

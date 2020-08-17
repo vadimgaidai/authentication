@@ -21,7 +21,7 @@ const Index = () => {
 	return (
 		<main className={main}>
 			<Logo className={image} />
-			<h1 className={title}>Hello, {name ?? null}!</h1>
+			<h1 className={title}>{name && `Hello, ${name}!`}</h1>
 			<p className={description}>Welcome to Your React.js App</p>
 			<Button onClick={onLogoutHandler}>
 				<span> Logout </span>

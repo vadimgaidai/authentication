@@ -5,7 +5,6 @@ const eventBus = {
 		for (const callback of this.events[event]) {
 			callback(data)
 		}
-		console.log(this.events)
 	},
 	on(event, callback) {
 		if (!this.events[event]) {

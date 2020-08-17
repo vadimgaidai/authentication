@@ -43,7 +43,7 @@ const Auth = () => {
 	useEffect(() => setDidMount(true), [])
 
 	useEffect(() => {
-		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
+		// dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
 	}, [dispatch, pathname])
 
 	const onInputHandler = ({ type, value }) => {
@@ -60,14 +60,14 @@ const Auth = () => {
 		)
 		setLoading(false)
 		if (!error) {
-			isSignUp ? console.log(123) : history.push('/')
+			isSignUp ? window.$bus.emit('reset-data', true) : history.push('/')
 		}
 	}
 
 	const formContent = () => {
 		return (
 			<>
-				{isSignUp ? (
+				{isSignUp && (
 					<Input
 						type="text"
 						label="Name"
@@ -76,7 +76,7 @@ const Auth = () => {
 						preloader="Enter you name"
 						onInput={(value) => onInputHandler({ type: 'name', value })}
 					/>
-				) : null}
+				)}
 				<Input
 					type="email"
 					label="Email"
@@ -117,7 +117,7 @@ const Auth = () => {
 					isLoading={isLoading}
 					onSubmit={onSubmit}
 				>
-					{isDidMount ? formContent() : <></>}
+					{isDidMount && formContent()}
 				</Form>
 				<p className={route}>
 					{isSignUp ? 'Dont have an account?' : 'Already have an account?'}

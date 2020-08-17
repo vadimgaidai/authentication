@@ -19,9 +19,7 @@ const Form = ({
 	const [validations, setValidations] = useState({})
 	const [isValid, setIsValid] = useState(false)
 
-	useHistory().listen(() => {
-		setValidations({})
-	})
+	useHistory().listen(() => setValidations({}))
 
 	const checkValidInput = (isValidInput, type) => {
 		setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))
@@ -31,7 +29,8 @@ const Form = ({
 		setIsValid(Object.values(validations).every((valid) => valid))
 	}, [validations])
 
-	const onSubmitHandler = () => {
+	const onSubmitHandler = (event) => {
+		event.preventDefault()
 		window.$bus.emit('check-valid', true)
 		if (isValid) {
 			onSubmit()
@@ -39,13 +38,7 @@ const Form = ({
 	}
 
 	return (
-		<form
-			className={form}
-			onSubmit={(event) => {
-				event.preventDefault()
-				onSubmitHandler()
-			}}
-		>
+		<form className={form} onSubmit={onSubmitHandler}>
 			<FormProvider value={checkValidInput}>
 				<h2 className={title}>{itleValue}</h2>
 				{children}
