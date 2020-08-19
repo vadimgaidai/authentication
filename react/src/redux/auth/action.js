@@ -97,12 +97,30 @@ export const onSignIn = ({ email, password }) => async (dispatch) => {
 	}
 }
 
-export const onSignUp = ({ name, email, password }) => async () => {
+export const onSignUp = ({ name, email, password }) => async (dispatch) => {
 	try {
 		await window.$api.auth.sendSignUp(name, email, password)
+		dispatch(
+			notification({
+				type: 'success',
+				title: 'Registration completed successfully',
+				text: 'Now you can log in to your account',
+			})
+		)
 		return false
-	} catch (error) {
-		return error
+	} catch ({ status }) {
+		if (status === 400) {
+			dispatch(
+				notification({
+					type: 'danger',
+					title: 'An account with this email address already exists',
+					text: 'Please check the correctness of the entered data',
+				})
+			)
+		} else {
+			dispatch(notificationServerError(status))
+		}
+		return true
 	}
 }
 
@@ -111,7 +129,7 @@ export const onLogout = () => (dispatch) => {
 		dispatch(setAuthentication(false))
 		localStorage.clear()
 		dispatch(resetState())
-	} catch (error) {
-		console.error(error)
+	} catch ({ status }) {
+		dispatch(notificationServerError(status))
 	}
 }

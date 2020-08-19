@@ -45,13 +45,18 @@ const notification = ({
 		type,
 		title,
 		message,
-		animationIn: ['animated', 'fadeIn'],
-		animationOut: ['animated', 'fadeOut'],
-		dismiss: {
-			duration: 2000,
-		},
-		showIcon: true,
+		insert: 'top',
 		container: 'top-right',
+		animationIn: ['notification-animated-in', 'fadeIn'],
+		animationOut: ['notification-animated-out', 'fadeOut'],
+		dismiss: {
+			duration: 3000,
+		},
+		slidingExit: {
+			duration: 800,
+			timingFunction: 'ease-out',
+			delay: 0,
+		},
 	})
 }
 
