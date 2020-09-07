@@ -19,6 +19,14 @@ body {
 	background-color: $primary-bg;
 }
 
+a,
+button,
+input {
+	&:focus {
+		outline: 0;
+	}
+}
+
 html,
 body,
 div,

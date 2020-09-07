@@ -57,8 +57,8 @@ const Input = ({
 
 	const checkIsValid = useCallback(
 		(isError) => {
-			return rules.some((func) => {
-				const message = func(value)
+			return rules.some((cb) => {
+				const message = cb(value)
 				if (isError && !isReset) {
 					setState((prevState) => ({
 						...prevState,

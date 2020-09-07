@@ -43,11 +43,9 @@ const Form = ({
 				<h2 className={title}>{itleValue}</h2>
 				{children}
 				<Button typeButton={typeButton}>
-					{isLoading ? (
-						<ThreeDots className={icon} />
-					) : (
-						<span>{buttonValue}</span>
-					)}
+					<span>
+						{isLoading ? <ThreeDots className={icon} /> : buttonValue}
+					</span>
 				</Button>
 			</FormProvider>
 		</form>
