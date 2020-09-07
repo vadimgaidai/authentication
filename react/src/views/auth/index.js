@@ -46,7 +46,7 @@ const Auth = () => {
 		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
 	}, [dispatch, pathname])
 
-	const onInputHandler = ({ type, value }) => {
+	const setFormData = ({ type, value }) => {
 		setState((prevState) => ({
 			...prevState,
 			formData: { ...formData, [type]: value },
@@ -74,7 +74,7 @@ const Auth = () => {
 						value={formData.name}
 						rules={formRules.name}
 						preloader="Enter you name"
-						onInput={(value) => onInputHandler({ type: 'name', value })}
+						onInput={(value) => setFormData({ type: 'name', value })}
 					/>
 				)}
 				<Input
@@ -83,7 +83,7 @@ const Auth = () => {
 					value={formData.email}
 					rules={formRules.email}
 					preloader="Enter you email"
-					onInput={(value) => onInputHandler({ type: 'email', value })}
+					onInput={(value) => setFormData({ type: 'email', value })}
 				/>
 				<Input
 					type="password"
@@ -91,7 +91,7 @@ const Auth = () => {
 					value={formData.password}
 					rules={formRules.password}
 					preloader="Enter you password"
-					onInput={(value) => onInputHandler({ type: 'password', value })}
+					onInput={(value) => setFormData({ type: 'password', value })}
 				/>
 			</>
 		)

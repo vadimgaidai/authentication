@@ -6,6 +6,8 @@ import classes from './button.module.scss'
 const { button, disabled } = classes
 
 const Button = ({ children, typeButton, disabled: isDisabled, onClick }) => {
+	const onClickHandler = (event) => onClick(event)
+
 	return (
 		<button
 			className={[
@@ -13,7 +15,7 @@ const Button = ({ children, typeButton, disabled: isDisabled, onClick }) => {
 				classes[typeButton],
 				disabled ? isDisabled : null,
 			].join(' ')}
-			onClick={(event) => onClick(event)}
+			onClick={onClickHandler}
 		>
 			{children}
 		</button>

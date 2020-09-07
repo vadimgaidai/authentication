@@ -89,14 +89,18 @@ const Input = ({
 		$bus.on('check-valid', (event) => {
 			setValidation(event)
 		})
-		$bus.on('reset-data', (event) => {
-			setReset(event)
-			onInput('')
-			inputRef.current.value = ''
-			setReset(false)
+		$bus.on('reset-data', (isResetEvent) => {
+			isResetEvent ? setReset(true) : setReset(false)
 		})
 		return () => $bus.remove('check-valid')
 	}, [value])
+
+	useEffect(() => {
+		if (isReset) {
+			onInput('')
+			inputRef.current.value = ''
+		}
+	}, [isReset])
 
 	const setVisiblePassword = (event) => {
 		event.preventDefault()
@@ -107,6 +111,12 @@ const Input = ({
 		}))
 	}
 
+	const onInputHandler = ({ target: { value: inputValue } }) => {
+		onInput(inputValue)
+	}
+
+	const onBlurHandler = () => setValidation(true)
+
 	return (
 		<label className={label}>
 			<p className={text}>{labelValue}</p>
@@ -116,8 +126,8 @@ const Input = ({
 					type={inputType || type}
 					placeholder={preloader}
 					defaultValue={value}
-					onInput={({ target: { value: inputValue } }) => onInput(inputValue)}
-					onBlur={() => setValidation(true)}
+					onInput={onInputHandler}
+					onBlur={onBlurHandler}
 					ref={inputRef}
 				/>
 				{type === 'password' && (
