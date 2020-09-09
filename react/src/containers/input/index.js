@@ -83,7 +83,6 @@ const Input = ({
 	}, [isSignUp])
 
 	useEffect(() => {
-		console.log(isDidMount)
 		if (isDidMount) {
 			setValidation(!isReset)
 		}
