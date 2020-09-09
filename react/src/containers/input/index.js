@@ -83,6 +83,7 @@ const Input = ({
 	}, [isSignUp])
 
 	useEffect(() => {
+		console.log(isDidMount)
 		if (isDidMount) {
 			setValidation(!isReset)
 		}
@@ -112,7 +113,7 @@ const Input = ({
 	}
 
 	const onInputHandler = ({ target: { value: inputValue } }) => {
-		onInput(inputValue)
+		onInput({ type: labelValue.toLowerCase(), inputValue })
 	}
 
 	const onBlurHandler = () => setValidation(true)
