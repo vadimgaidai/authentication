@@ -86,11 +86,15 @@ const Input = ({
 		if (isDidMount) {
 			setValidation(!isReset)
 		}
-		$bus.on('check-valid', (event) => {
-			setValidation(event)
-		})
 		$bus.on('reset-data', (isResetEvent) => {
 			isResetEvent ? setReset(true) : setReset(false)
+		})
+		return () => $bus.remove('reset-data')
+	}, [])
+
+	useEffect(() => {
+		$bus.on('check-valid', (event) => {
+			setValidation(event)
 		})
 		return () => $bus.remove('check-valid')
 	}, [value])

@@ -27,14 +27,13 @@ if (entry) {
 api({ request, store })
 window.$bus = eventBus
 
+const hideLoader = () => loader.classList.add('preloader--hide')
+
 store.dispatch(initial()).then(() => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
-				<App
-					hideLoader={() => loader.classList.add('preloader--hide')}
-					showLoader={() => loader.classList.remove('preloader--hide')}
-				/>
+				<App hideLoader={hideLoader} />
 				<ReactNotification />
 			</BrowserRouter>
 		</Provider>,

@@ -64,7 +64,7 @@ export const authReducer = (
 		}
 		case RESET_STATE: {
 			return {
-				state: { ...duplicateState },
+				...duplicateState,
 			}
 		}
 		default:
