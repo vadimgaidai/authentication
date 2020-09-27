@@ -47,12 +47,7 @@ const Input = ({
 	})
 
 	const inputRef = useRef(null)
-
 	const [isReset, setReset] = useState(false)
-	const [isDidMount, setDidMount] = useState(false)
-
-	useEffect(() => setDidMount(true), [])
-
 	const context = useContext(FormContext)
 
 	const checkIsValid = useCallback(
@@ -68,7 +63,7 @@ const Input = ({
 				return message
 			})
 		},
-		[rules, value]
+		[isReset, rules, value]
 	)
 
 	const setValidation = useCallback(
@@ -78,26 +73,19 @@ const Input = ({
 		[checkIsValid, context, type]
 	)
 
-	useEffect(() => {
-		setValidation(false)
-	}, [isSignUp])
+	$bus.on('reset-data', (isResetEvent) => {
+		isResetEvent ? setReset(true) : setReset(false)
+	})
 
+	$bus.on('check-valid', (event) => {
+		setValidation(event)
+	})
 	useEffect(() => {
-		if (isDidMount) {
-			setValidation(!isReset)
+		return () => {
+			$bus.remove('check-valid')
+			$bus.remove('reset-data')
 		}
-		$bus.on('reset-data', (isResetEvent) => {
-			isResetEvent ? setReset(true) : setReset(false)
-		})
-		return () => $bus.remove('reset-data')
 	}, [])
-
-	useEffect(() => {
-		$bus.on('check-valid', (event) => {
-			setValidation(event)
-		})
-		return () => $bus.remove('check-valid')
-	}, [value])
 
 	useEffect(() => {
 		if (isReset) {
@@ -105,6 +93,10 @@ const Input = ({
 			inputRef.current.value = ''
 		}
 	}, [isReset])
+
+	useEffect(() => {
+		setValidation(false)
+	}, [isSignUp])
 
 	const setVisiblePassword = (event) => {
 		event.preventDefault()
@@ -115,11 +107,14 @@ const Input = ({
 		}))
 	}
 
-	const onInputHandler = ({ target: { value: inputValue } }) => {
-		onInput({ type: labelValue.toLowerCase(), inputValue })
-	}
+	const onInputHandler = useCallback(
+		({ target: { value: inputValue } }) => {
+			onInput({ type: labelValue.toLowerCase(), inputValue })
+		},
+		[labelValue, onInput]
+	)
 
-	const onBlurHandler = () => setValidation(true)
+	const onBlurHandler = useCallback(() => setValidation(true), [setValidation])
 
 	return (
 		<label className={label}>

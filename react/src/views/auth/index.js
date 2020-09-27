@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
@@ -46,12 +46,15 @@ const Auth = () => {
 		dispatch(setIsSignUp(pathname.split('/')[1] === 'signup'))
 	}, [dispatch, pathname])
 
-	const setFormData = ({ type, inputValue }) => {
-		setState((prevState) => ({
-			...prevState,
-			formData: { ...formData, [type]: inputValue },
-		}))
-	}
+	const setFormData = useCallback(
+		({ type, inputValue }) => {
+			setState((prevState) => ({
+				...prevState,
+				formData: { ...formData, [type]: inputValue },
+			}))
+		},
+		[formData]
+	)
 
 	const onSubmit = async () => {
 		setLoading(true)
