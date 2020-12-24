@@ -37,4 +37,4 @@ Three frames in the application:
 
 ### The version using Vue can be viewed at this [link](http://vue-authentication.surge.sh).
 
-### React version coming soon
+### The version using React can be viewed at this [link](http://react-authentication.surge.sh/)
