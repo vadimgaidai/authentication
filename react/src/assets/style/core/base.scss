@@ -136,7 +136,7 @@ video {
 	width: 100%;
 	height: 100%;
 	background-color: rgba($form-color, 0.5);
-	transition: opacity 0.5s ease-in;
+	transition: opacity $primary-transition ease-in;
 
 	&--hide {
 		z-index: -1;
@@ -181,12 +181,31 @@ video {
 	&-animated {
 		&-in {
 			opacity: 1;
-			transition: opacity 0.5s ease-in;
+			transition: opacity $primary-transition ease-in;
 		}
 
 		&-out {
 			opacity: 0;
-			transition: opacity 0.5s ease-in-out;
+			transition: opacity $primary-transition ease-in-out;
+		}
+	}
+}
+
+.fade {
+	&-enter {
+		opacity: 0;
+
+		&-active {
+			opacity: 1;
+			transition: opacity $primary-transition;
+		}
+	}
+
+	&-exit {
+		opacity: 1;
+		&-active {
+			opacity: 0;
+			transition: opacity $primary-transition;
 		}
 	}
 }

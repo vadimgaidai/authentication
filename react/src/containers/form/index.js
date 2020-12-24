@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import PropTypes from 'prop-types'
+
 import Button from '../../components/button'
 import ThreeDots from '../../icons/ThreeDots'
 
@@ -9,7 +11,7 @@ import { FormProvider } from '../../context/formContext'
 import { form, title, icon } from './form.module.scss'
 
 const Form = ({
-	title: itleValue,
+	title: tileValue,
 	children,
 	typeButton,
 	buttonValue,
@@ -40,12 +42,16 @@ const Form = ({
 	return (
 		<form className={form} onSubmit={onSubmitHandler}>
 			<FormProvider value={checkValidInput}>
-				<h2 className={title}>{itleValue}</h2>
+				<h2 className={title}>{tileValue}</h2>
 				{children}
 				<Button typeButton={typeButton}>
-					<span>
-						{isLoading ? <ThreeDots className={icon} /> : buttonValue}
-					</span>
+					<SwitchTransition>
+						<CSSTransition key={isLoading} classNames="fade" timeout={300}>
+							<span>
+								{isLoading ? <ThreeDots className={icon} /> : buttonValue}
+							</span>
+						</CSSTransition>
+					</SwitchTransition>
 				</Button>
 			</FormProvider>
 		</form>

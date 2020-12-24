@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 
+import { onSignIn, onSignUp, setIsSignUp } from '../../redux/auth/action'
+import { required, length, name, email, password } from '../../utils/validation'
+
 import Form from '../../containers/form'
 import Input from '../../containers/input'
-import { onSignIn, onSignUp, setIsSignUp } from '../../redux/auth/action'
-
-import { required, length, name, email, password } from '../../utils/validation'
 
 import {
 	auth,

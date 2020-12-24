@@ -6,6 +6,7 @@ import React, {
 	useCallback,
 	useRef,
 } from 'react'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
@@ -17,7 +18,7 @@ import EyeHide from '../../icons/EyeHide'
 import {
 	label,
 	text,
-	contaier,
+	container,
 	input,
 	inputError,
 	error,
@@ -80,6 +81,7 @@ const Input = ({
 	$bus.on('check-valid', (event) => {
 		setValidation(event)
 	})
+
 	useEffect(() => {
 		return () => {
 			$bus.remove('check-valid')
@@ -114,12 +116,12 @@ const Input = ({
 		[labelValue, onInput]
 	)
 
-	const onBlurHandler = useCallback(() => setValidation(true), [setValidation])
+	const onBlurHandler = () => setValidation(true)
 
 	return (
 		<label className={label}>
 			<p className={text}>{labelValue}</p>
-			<div className={contaier}>
+			<div className={container}>
 				<input
 					className={[input, errorValue ? inputError : null].join(' ')}
 					type={inputType || type}
@@ -143,7 +145,11 @@ const Input = ({
 					</button>
 				)}
 			</div>
-			{errorValue && <span className={error}> {errorValue}</span>}
+			<SwitchTransition>
+				<CSSTransition key={errorValue} classNames="fade" timeout={300}>
+					<span className={error}>{errorValue}</span>
+				</CSSTransition>
+			</SwitchTransition>
 		</label>
 	)
 }
