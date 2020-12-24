@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import PropTypes from 'prop-types'
 
@@ -18,10 +18,13 @@ const Form = ({
 	onSubmit,
 	isLoading,
 }) => {
+	const { pathname } = useLocation()
 	const [validations, setValidations] = useState({})
 	const [isValid, setIsValid] = useState(false)
 
-	useHistory().listen(() => setValidations({}))
+	useEffect(() => {
+		setValidations({})
+	}, [pathname])
 
 	const checkValidInput = (isValidInput, type) => {
 		setValidations((prevState) => ({ ...prevState, [type]: isValidInput }))
